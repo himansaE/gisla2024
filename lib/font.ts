@@ -13,6 +13,6 @@ export const font_pasti = localFont({
 });
 
 export const font_lato = Lato({
-  weight: "900",
+  weight: ["900", "400"],
   subsets: ["latin"],
 });

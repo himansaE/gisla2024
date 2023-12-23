@@ -38,7 +38,7 @@ export const IntroPage = () => {
       <section className="min-h-[max(500px,100vh)] relative" id="intro">
         <IntroCanvas />
         <div
-          className={`${font_poppins_one.className} z-40 flex flex-col gap-8 h-full px-8 py-4 justify-center items-center min-h-[max(500px,calc(100vh_-_100px))]`}
+          className={`${font_poppins_one.className} z-40 flex flex-col gap-8 h-full px-8 py-4 justify-center items-center min-h-[max(500px,calc(100vh_-_110px))]`}
           onMouseMove={mouseMove}
           onTouchMove={touchMove}
         >
@@ -47,9 +47,13 @@ export const IntroPage = () => {
           }> Exploit AI to Redefine
             <div className="md:text-9xl sm:text-8xl text-6xl tracking-tight">Creativity</div></h1>
           <Timer />
+
         </div>
-        <div className="flex justify-center pb-24" onMouseMove={mouseMove} onTouchMove={touchMove}>
-          <Image src="/images/logo-balck.png" alt="Gisla 2024 logo" height={136.62} width={300} />
+        <div className="flex flex-col gap-1 items-center pb-24" onMouseMove={mouseMove} onTouchMove={touchMove}>
+          <Image src="/images/logo-for-dark.webp" alt="Gisla 2024 logo" height={136.62} width={300} />
+          <h1 className="text-2xl text-white font-extrabold px-5 text-center">
+            The Global AI Art Competition
+          </h1>
         </div>
       </section>
       <section className="w-full h-20 bg-bg-main-2 sticky bottom-0 flex justify-center" onMouseMove={mouseMove}
