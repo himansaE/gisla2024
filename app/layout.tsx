@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { font_lato } from "@/lib/font";
 
 export const metadata: Metadata = {
-  title: "Gisla 2023",
+  title: "Gisla 2024",
   description: "Empower your imagination",
 };
 
@@ -16,7 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={font_lato.className}>
+        {children}
+        <Toaster closeButton richColors theme="light" />
+      </body>
     </html>
   );
 }
