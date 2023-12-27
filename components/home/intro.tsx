@@ -1,24 +1,17 @@
 "use client";
 import { IntroCanvas } from "./intro-canvas";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { font_poppins_one } from "@/lib/font";
 import { Timer } from "./timer";
 import Link from "next/link";
 import Image from "next/image";
-import { onAuthStateChanged } from "@/lib/firebase/auth";
+import { IntroButton } from "./intro-button";
 
 export const IntroPage = () => {
   const canvas = useRef<HTMLCanvasElement>(null);
-  const [isLogged, setIsLogged] = useState(false);
   useEffect(() => {
     const _canvas = document.getElementById("intro-canvas");
     if (_canvas) (canvas.current as HTMLElement) = _canvas;
-
-    const listen = onAuthStateChanged((user) => {
-      if (user) setIsLogged(true);
-      else setIsLogged(false);
-      return listen;
-    });
   });
 
   const mouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -84,16 +77,7 @@ export const IntroPage = () => {
         onTouchMove={touchMove}
       >
         <div className="translate-y-[-2.5rem]">
-          <Link
-            href={isLogged ? "/submit" : "/auth/register"}
-            className="rounded-2xl"
-          >
-            <div
-              className={`py-7 px-12 rounded-2xl bg-white  hover:bg-gradient-to-b from-transparent to-green-100 transition-colors  text-bg-main-2 md:text-xl ${font_poppins_one.className}`}
-            >
-              {isLogged ? "Submit your Image" : "Registration Open Soon"}
-            </div>
-          </Link>
+          <IntroButton />
         </div>
       </section>
     </>

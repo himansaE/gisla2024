@@ -29,8 +29,7 @@ export const LoginForm = () => {
           await signInWithPassword(
             form_data.get("email"),
             form_data.get("password"),
-            form_data.get("remember-me") === "on",
-            "password"
+            form_data.get("remember-me") === "on"
           ).then((i) => {
             if (i.error) {
               if (i.toast) toast.error(i.text);

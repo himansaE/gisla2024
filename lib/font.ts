@@ -3,7 +3,7 @@ import { Lato, Poppins } from "next/font/google";
 import localFont from "next/font/local";
 
 export const font_poppins_one = Poppins({
-  weight: ["900", "600"],
+  weight: ["900", "600", "400"],
   subsets: ["latin"],
 });
 

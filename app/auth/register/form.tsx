@@ -37,8 +37,7 @@ export const RegisterForm = () => {
             form_data.get("email"),
             form_data.get("password"),
             form_data.get("conform-password"),
-            form_data.get("rules"),
-            "password"
+            form_data.get("rules")
           ).then((i) => {
             if (i.error) {
               if (i.toast) toast.error(i.error);

@@ -36,11 +36,7 @@ const authError = (
 });
 type AuthResponse = AuthDone | AuthError;
 
-const firebaseAuthCommonErrors = async (
-  error: string,
-  provider?: string,
-  email?: string
-) => {
+const firebaseAuthCommonErrors = async (error: string) => {
   switch (error) {
     case "auth/email-already-in-use":
       return authError(
@@ -104,8 +100,7 @@ export async function registerWithPassword(
   email: FormDataEntryValue | null,
   pass: FormDataEntryValue | null,
   conf_pass: FormDataEntryValue | null,
-  rules: FormDataEntryValue | null,
-  provider?: string
+  rules: FormDataEntryValue | null
 ): Promise<AuthResponse> {
   if (typeof fname !== "string" || fname.trim() === "")
     return authError("Enter valid first name.", "first-name");
@@ -146,15 +141,14 @@ export async function registerWithPassword(
       })
     )
     .catch(async (i) => {
-      return firebaseAuthCommonErrors(i.code, provider, email);
+      return firebaseAuthCommonErrors(i.code);
     });
 }
 
 export async function signInWithPassword(
   email: FormDataEntryValue | null,
   password?: FormDataEntryValue | null,
-  remember?: boolean,
-  provider?: string
+  remember?: boolean
 ): Promise<AuthResponse> {
   await auth.setPersistence(
     remember ? browserLocalPersistence : browserSessionPersistence
@@ -183,7 +177,7 @@ export async function signInWithPassword(
       return { error: false, user: i };
     })
     .catch(async (i): Promise<AuthError> => {
-      return await firebaseAuthCommonErrors(i.code, provider, email);
+      return await firebaseAuthCommonErrors(i.code);
     });
 }
 

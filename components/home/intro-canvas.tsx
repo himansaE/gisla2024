@@ -90,9 +90,6 @@ export const IntroCanvas = () => {
       if (!advectionProgram) return;
       if (!displayProgram) return;
       if (!gl) return;
-
-
-
       const dt = (Date.now() - prevTimestamp) / 1000;
       prevTimestamp = Date.now();
 
@@ -101,8 +98,8 @@ export const IntroCanvas = () => {
         const newX =
           (0.65 +
             0.2 *
-            Math.cos(0.006 * prevTimestamp) *
-            Math.sin(0.008 * prevTimestamp)) *
+              Math.cos(0.006 * prevTimestamp) *
+              Math.sin(0.008 * prevTimestamp)) *
           window.innerWidth;
         const newY =
           (0.5 + 0.12 * Math.sin(0.01 * prevTimestamp)) * window.innerHeight;
@@ -256,20 +253,18 @@ export const IntroCanvas = () => {
         outputColor.read().attach(0)
       );
       blit(gl, null);
-      //#endregion 
+      //#endregion
 
       animation_frame.current = requestAnimationFrame(render);
 
-
-
-      const status = gl.checkFramebufferStatus(gl.FRAMEBUFFER) // Check for framebuffer completeness
+      const status = gl.checkFramebufferStatus(gl.FRAMEBUFFER); // Check for framebuffer completeness
 
       if (status !== gl.FRAMEBUFFER_COMPLETE) {
-        console.warn('Framebuffer incomplete:', status);
+        console.warn("Framebuffer incomplete:", status);
         cancelAnimationFrame(animation_frame.current); // Stop the animation frame
       }
     }
-    canvas.current.style.opacity = "1"
+    canvas.current.style.opacity = "1";
 
     render();
     return () => {
@@ -310,7 +305,6 @@ export const IntroCanvas = () => {
           pointer.y = e.targetTouches[0].pageY;
           pointer.firstMove = true;
         }}
-
       ></canvas>
       <div className="absolute top-0 left-0 w-full  h-full z-[-5] bg-white mix-blend-exclusion"></div>
     </>
