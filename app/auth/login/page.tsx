@@ -1,20 +1,16 @@
-"use client";
 import { font_lato, font_poppins_one } from "@/lib/font";
 import { LoginForm } from "./form";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/lib/firebase/firebase";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-export default function LoginPage() {
-  const [user, loading] = useAuthState(auth);
-  const router = useRouter();
-
-  useEffect(() => {
-    if (user) router.replace("/");
-  }, [user]);
-
-  if (loading) return <>loading</>;
+export default function LoginPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  let error = { text: "", err_in: "" };
+  if (searchParams != undefined) {
+    if (searchParams["error"] === "AuthError")
+      error = { text: "Invalid Credentials.", err_in: "all" };
+  }
 
   return (
     <main className="grid lg:grid-cols-2 justify-items-center">
@@ -36,7 +32,7 @@ export default function LoginPage() {
         </h1>
 
         <div className={`${font_lato.className} px-4 xsm:px-10 mb-10`}>
-          <LoginForm />
+          <LoginForm error_text={error.text} error_in={error.err_in} />
         </div>
       </div>
     </main>

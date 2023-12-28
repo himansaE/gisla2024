@@ -1,20 +1,39 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { GoogleLogo } from "@/components/auth/google-logo";
 import { Checkbox } from "@/components/ui/checkbox";
 import { InputBox } from "@/components/ui/input-box";
 import { OrLine } from "@/components/ui/or-line";
 import Spinner from "@/components/ui/spinner";
-import { signInWithGoogle, signInWithPassword } from "@/lib/firebase/auth";
 import Link from "next/link";
 import { useState } from "react";
-import { toast } from "sonner";
+import { signIn } from "next-auth/react";
 
-export const LoginForm = () => {
+const local_validate = (
+  email: FormDataEntryValue | null,
+  password: FormDataEntryValue | null
+) => {
+  if (
+    !(
+      typeof email === "string" &&
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
+    )
+  )
+    return ["Enter valid Email address.", "email"];
+  if (!(typeof password === "string" && password.length >= 8))
+    return [
+      "Invalid password. Please check your password and try again",
+      "password",
+    ];
+  return { email, password };
+};
+
+export const LoginForm = (props: {
+  error_text?: string;
+  error_in?: string;
+}) => {
   const [submitting, setSubmitting] = useState(false);
-  const [errorIn, setErrorIn] = useState("");
-  const [errorText, SetErrorText] = useState("");
-  const router = useRouter();
+  const [errorIn, setErrorIn] = useState(props.error_in ?? "");
+  const [errorText, SetErrorText] = useState(props.error_text ?? "");
 
   return (
     <>
@@ -26,20 +45,25 @@ export const LoginForm = () => {
           setErrorIn("");
           SetErrorText("");
           const form_data = new FormData(e.target as HTMLFormElement);
-          await signInWithPassword(
+          const validated = local_validate(
             form_data.get("email"),
-            form_data.get("password"),
-            form_data.get("remember-me") === "on"
-          ).then((i) => {
-            if (i.error) {
-              if (i.toast) toast.error(i.text);
-              setErrorIn(i.in);
-              SetErrorText(i.text);
-              return setSubmitting(false);
-            }
-            toast.success("Login Successful! Welcome back!");
-            router.push("/");
-          });
+            form_data.get("password")
+          );
+          if (Array.isArray(validated)) {
+            SetErrorText(validated[0]);
+            setErrorIn(validated[1]);
+            return setSubmitting(false);
+          }
+          await signIn("Credentials", {
+            email: form_data.get("email"),
+            password: form_data.get("password"),
+            type: "signin",
+            redirect: true,
+            callbackUrl: "/auth/login",
+          })
+            .then((i) => console.log(i))
+            .catch((i) => console.error(i))
+            .finally(() => setSubmitting(false));
         }}
       >
         <h2 className={`font-bold text-2xl pb-3`}>
@@ -103,11 +127,7 @@ export const LoginForm = () => {
           submitting ? "opacity-60 cursor-default" : "hover:bg-gray-100/70"
         }`}
         onClick={() => {
-          !submitting &&
-            signInWithGoogle().then((i) => {
-              toast.success("Sign in with Google successful.", {});
-              router.push("/");
-            });
+          !submitting && console.log("googl");
         }}
       >
         <GoogleLogo />

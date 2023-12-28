@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// user data
+
+model User {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  email          String    @unique
+  name           String
+  lastName       String
+  emailValidated Boolean   @default(false)
+  image          String?
+  role           String?   @default("user")
+  providers      String[]
+  session        Session[]
+  Account        Account[]
+  otp            otp[]
+  Key            Key?
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Key {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  hashed_password String
+  userId          String @unique @db.ObjectId
+  user            User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String   @id @map("_id") @db.ObjectId
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model otp {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  user_id        String   @db.ObjectId
+  otp            String
+  type           String
+  for            String
+  expire         DateTime
+  update_token   String?
+  use_count      Int      @default(0)
+  validate_count Int      @default(0)
+  user           User     @relation(references: [id], fields: [user_id], onDelete: Cascade)
+}

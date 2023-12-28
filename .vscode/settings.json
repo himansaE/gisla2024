@@ -1,4 +1,12 @@
 {
   "editor.inlineSuggest.showToolbar": "always",
-  "cSpell.words": ["Gisla", "pasti", "Paytone", "sonner"]
+  "cSpell.words": [
+    "fname",
+    "Gisla",
+    "lname",
+    "pasti",
+    "Paytone",
+    "signout",
+    "sonner"
+  ]
 }

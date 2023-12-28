@@ -5,15 +5,51 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { InputBox } from "@/components/ui/input-box";
 import { OrLine } from "@/components/ui/or-line";
 import Spinner from "@/components/ui/spinner";
-import {
-  registerWithPassword,
-  signInWithGoogle,
-  signInWithPassword,
-} from "@/lib/firebase/auth";
 import Link from "next/link";
 import { useState } from "react";
-import { toast } from "sonner";
+import { AuthError, AuthResponse, authError } from "@/lib/auth/utils";
 
+export function local_validate(
+  fname: FormDataEntryValue | null,
+  lname: FormDataEntryValue | null,
+  email: FormDataEntryValue | null,
+  pass: FormDataEntryValue | null,
+  conf_pass: FormDataEntryValue | null,
+  rules: FormDataEntryValue | null
+): AuthError | boolean {
+  if (typeof fname !== "string" || fname.trim() === "")
+    return authError("Enter valid first name.", "first-name");
+
+  if (typeof lname !== "string" || lname.trim() === "")
+    return authError("Enter valid last name.", "last-name");
+
+  if (
+    typeof email !== "string" ||
+    !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
+  )
+    return authError(
+      "Invalid email. Please enter a valid email address.",
+      "email"
+    );
+  if (typeof pass !== "string" || pass.length < 8)
+    return authError(
+      "Invalid password. Please enter a password with at least eight characters.",
+      "password"
+    );
+  if (typeof conf_pass !== "string" || pass != conf_pass)
+    return authError(
+      "Passwords do not match. Please ensure that the 'Password' and 'Confirm Password' fields contain the same values.",
+      "conform-password"
+    );
+
+  if (typeof rules !== "string" || rules !== "on")
+    return authError(
+      "Please make sure to agree to Gisla rules and guidelines before proceeding.",
+      "rules"
+    );
+
+  return true;
+}
 export const RegisterForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const [errorIn, setErrorIn] = useState("");
@@ -31,23 +67,53 @@ export const RegisterForm = () => {
           setErrorIn("");
           SetErrorText("");
           const form_data = new FormData(e.target as HTMLFormElement);
-          await registerWithPassword(
+          console.log(form_data.get("rules"));
+
+          const validated = local_validate(
             form_data.get("first-name"),
             form_data.get("last-name"),
             form_data.get("email"),
             form_data.get("password"),
             form_data.get("conform-password"),
             form_data.get("rules")
-          ).then((i) => {
-            if (i.error) {
-              if (i.toast) toast.error(i.error);
-              setErrorIn(i.in);
-              SetErrorText(i.text);
-              return setSubmitting(false);
-            }
-            toast.success("Login Successful! Welcome back!");
-            router.push("/");
-          });
+          );
+          if (typeof validated !== "boolean") {
+            SetErrorText(validated.error);
+            setErrorIn(validated.err_in);
+            return setSubmitting(false);
+          }
+          await fetch("/api/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: form_data.get("email"),
+              password: form_data.get("password"),
+              fname: form_data.get("first-name"),
+              lname: form_data.get("last-name"),
+            }),
+          })
+            .then((i) => i.json())
+            .then((i: AuthResponse) => {
+              if (i.done) {
+                return router.push(
+                  `/auth/login?user=new&email${encodeURI(
+                    (form_data.get("email") as string) ?? ""
+                  )}`
+                );
+              }
+              setErrorIn(i.err_in);
+              SetErrorText(i.error);
+              setSubmitting(false);
+            })
+            .catch(() => {
+              setErrorIn("");
+              SetErrorText(
+                "A network error occurred. Please check your internet connection and try again."
+              );
+              setSubmitting(false);
+            });
         }}
       >
         <h2 className={`font-bold text-2xl pb-3`}>
@@ -149,12 +215,7 @@ export const RegisterForm = () => {
           submitting ? "opacity-60 cursor-default" : "hover:bg-gray-100/70"
         }`}
         onClick={() => {
-          !submitting &&
-            signInWithGoogle().then((i) => {
-              console.log(i.operationType);
-              toast.success("Sign in with Google successful.", {});
-              router.push("/");
-            });
+          !submitting && console.log("signin with google");
         }}
       >
         <GoogleLogo />

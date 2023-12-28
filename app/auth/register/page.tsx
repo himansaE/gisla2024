@@ -1,20 +1,7 @@
-"use client";
 import { font_lato, font_poppins_one } from "@/lib/font";
 import { RegisterForm } from "./form";
-import { auth } from "@/lib/firebase/firebase";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function LoginPage() {
-  const [user, loading] = useAuthState(auth);
-  const router = useRouter();
-
-  useEffect(() => {
-    if (user) router.replace("/");
-  }, [user]);
-
-  if (loading) return <>loading</>;
   return (
     <main
       className={`${font_lato.className} grid lg:grid-cols-2 justify-items-center`}
