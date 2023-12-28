@@ -1,7 +1,9 @@
 import { font_lato, font_poppins_one } from "@/lib/font";
 import { LoginForm } from "./form";
+import { auth } from "@/lib/auth/auth";
+import { redirect } from "next/navigation";
 
-export default function LoginPage({
+export default async function LoginPage({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -11,7 +13,9 @@ export default function LoginPage({
     if (searchParams["error"] === "AuthError")
       error = { text: "Invalid Credentials.", err_in: "all" };
   }
+  const user = await auth();
 
+  if (user?.user) redirect("/");
   return (
     <main className="grid lg:grid-cols-2 justify-items-center">
       <div
