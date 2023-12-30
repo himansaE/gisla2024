@@ -32,6 +32,7 @@ export const LoginForm = (props: {
   error_in?: string;
 }) => {
   const [submitting, setSubmitting] = useState(false);
+  const [is_oauth_submit, setIsOauthSubmit] = useState(false);
   const [errorIn, setErrorIn] = useState(props.error_in ?? "");
   const [errorText, SetErrorText] = useState(props.error_text ?? "");
 
@@ -118,7 +119,11 @@ export const LoginForm = (props: {
           }`}
           disabled={submitting}
         >
-          {submitting ? <Spinner className="h-6 w-6" /> : "Login"}
+          {submitting && !is_oauth_submit ? (
+            <Spinner className="h-6 w-6" />
+          ) : (
+            "Login"
+          )}
         </button>
       </form>
       <OrLine />
@@ -126,8 +131,11 @@ export const LoginForm = (props: {
         className={`flex gap-[10px] px-3 items-center justify-center w-full my-10 rounded-md border-gray-300 border-[1.5px]  transition-colors ${
           submitting ? "opacity-60 cursor-default" : "hover:bg-gray-100/70"
         }`}
-        onClick={() => {
-          !submitting && console.log("googl");
+        onClick={async () => {
+          if (submitting) return;
+          setIsOauthSubmit(true);
+          setSubmitting(true);
+          await signIn("google");
         }}
       >
         <GoogleLogo />

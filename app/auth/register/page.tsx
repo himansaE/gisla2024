@@ -1,7 +1,9 @@
 import { font_lato, font_poppins_one } from "@/lib/font";
 import { RegisterForm } from "./form";
+import { blockAuth } from "@/lib/auth/guards";
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  await blockAuth();
   return (
     <main
       className={`${font_lato.className} grid lg:grid-cols-2 justify-items-center`}

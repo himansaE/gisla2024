@@ -9,5 +9,5 @@ export default function Page({
     return redirect("/auth/login?error=AuthError", RedirectType.replace);
   }
 
-  return <></>;
+  return <>Error</>;
 }

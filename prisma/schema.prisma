@@ -13,18 +13,18 @@ datasource db {
 // user data
 
 model User {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  email          String    @unique
-  name           String
-  lastName       String
-  emailValidated Boolean   @default(false)
-  image          String?
-  role           String?   @default("user")
-  providers      String[]
-  session        Session[]
-  Account        Account[]
-  otp            otp[]
-  Key            Key?
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  email         String    @unique
+  name          String
+  lastName      String?
+  emailVerified DateTime?
+  image         String?
+  role          String?   @default("user")
+  providers     String[]  @default(["google"])
+  session       Session[]
+  Account       Account[]
+  otp           otp[]
+  Key           Key?
 }
 
 model Session {

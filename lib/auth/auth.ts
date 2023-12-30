@@ -1,14 +1,32 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import NextAuth, { AuthError, Session } from "next-auth";
-import prisma from "../prisma";
+import NextAuth, { AuthError } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { Provider } from "next-auth/providers";
 import { LoginUserAPI } from "./login";
+
 import {
   fromDate,
   generateSessionToken,
   prisma_auth_adapter,
 } from "./lib.auth";
+import google from "next-auth/providers/google";
+
+const credentials_provider = CredentialsProvider({
+  name: "Credentials",
+  id: "Credentials",
+  async authorize(credentials) {
+    const res = await LoginUserAPI(credentials as any);
+
+    if (res.done) {
+      return res.user;
+    }
+    throw new AuthError(res);
+  },
+}) as Provider;
+
+const google_provider = google({
+  clientId: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+});
 
 export const {
   handlers: { GET, POST },
@@ -17,20 +35,7 @@ export const {
   signOut,
 } = NextAuth({
   adapter: prisma_auth_adapter,
-  providers: [
-    CredentialsProvider({
-      name: "Credentials",
-      id: "Credentials",
-      async authorize(credentials, req) {
-        const res = await LoginUserAPI(credentials as any);
-
-        if (res.done) {
-          return res.user;
-        }
-        throw new AuthError(res);
-      },
-    }) as Provider,
-  ],
+  providers: [credentials_provider, google_provider],
   pages: {
     signIn: "/auth/login",
     signOut: "/auth/signout",

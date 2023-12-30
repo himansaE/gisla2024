@@ -2,20 +2,36 @@ import { font_lato, font_poppins_one } from "@/lib/font";
 import { LoginForm } from "./form";
 import { auth } from "@/lib/auth/auth";
 import { redirect } from "next/navigation";
+import { blockAuth } from "@/lib/auth/guards";
 
 export default async function LoginPage({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  await blockAuth();
   let error = { text: "", err_in: "" };
   if (searchParams != undefined) {
-    if (searchParams["error"] === "AuthError")
-      error = { text: "Invalid Credentials.", err_in: "all" };
+    switch (searchParams["error"]) {
+      case "OAuthAccountNotLinked":
+        error = {
+          text: "Another account is already linked with the same email address. Please log in with the linked account or use a different email address.",
+          err_in: "all",
+        };
+        break;
+      case "AuthError":
+        error = { text: "Invalid Credentials.", err_in: "all" };
+        break;
+      case undefined:
+        break;
+      default:
+        error = {
+          text: "Something went wrong. Please try again later or contact support for assistance",
+          err_in: "all",
+        };
+    }
   }
-  const user = await auth();
 
-  if (user?.user) redirect("/");
   return (
     <main className="grid lg:grid-cols-2 justify-items-center">
       <div

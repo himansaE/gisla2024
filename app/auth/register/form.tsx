@@ -8,6 +8,7 @@ import Spinner from "@/components/ui/spinner";
 import Link from "next/link";
 import { useState } from "react";
 import { AuthError, AuthResponse, authError } from "@/lib/auth/utils";
+import { signIn } from "next-auth/react";
 
 export function local_validate(
   fname: FormDataEntryValue | null,
@@ -53,6 +54,7 @@ export function local_validate(
 export const RegisterForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const [errorIn, setErrorIn] = useState("");
+  const [is_oauth_submit, setIsOauthSubmit] = useState(false);
   const [errorText, SetErrorText] = useState("");
   const [showPass, setShowPass] = useState(false);
   const router = useRouter();
@@ -206,7 +208,11 @@ export const RegisterForm = () => {
           }`}
           disabled={submitting}
         >
-          {submitting ? <Spinner className="h-6 w-6" /> : "Sign up"}
+          {submitting && !is_oauth_submit ? (
+            <Spinner className="h-6 w-6" />
+          ) : (
+            "Sign up"
+          )}
         </button>
       </form>
       <OrLine />
@@ -214,8 +220,11 @@ export const RegisterForm = () => {
         className={`flex gap-[10px] px-3 items-center justify-center w-full my-10 rounded-md border-gray-300 border-[1.5px]  transition-colors ${
           submitting ? "opacity-60 cursor-default" : "hover:bg-gray-100/70"
         }`}
-        onClick={() => {
-          !submitting && console.log("signin with google");
+        onClick={async () => {
+          if (submitting) return;
+          setIsOauthSubmit(true);
+          setSubmitting(true);
+          await signIn("google");
         }}
       >
         <GoogleLogo />
@@ -225,7 +234,6 @@ export const RegisterForm = () => {
       <p className="text-sm text-center">
         Already have an account?{" "}
         <Link href="/auth/login" className="text-sm text-bg-main-2">
-          {" "}
           Login Here.
         </Link>
       </p>
