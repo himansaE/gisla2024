@@ -1,8 +1,6 @@
 import { randomUUID } from "crypto";
 
-export const config = {
-  runtime: "edge",
-};
+export const runtime = "edge";
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 let i = 0;
