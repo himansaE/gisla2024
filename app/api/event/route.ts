@@ -1,5 +1,3 @@
-import { randomUUID } from "crypto";
-
 export const runtime = "edge";
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
@@ -15,7 +13,7 @@ export async function GET() {
       await delay(500);
       let i = 0;
       while (i < 100) {
-        controller.enqueue(encoder.encode(`${randomUUID()}<br>`));
+        controller.enqueue(encoder.encode(`${i}<br>`));
         await delay(500);
         i++;
       }
