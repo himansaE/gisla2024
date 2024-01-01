@@ -81,3 +81,15 @@ model otp {
   validate_count Int      @default(0)
   user           User     @relation(references: [id], fields: [user_id], onDelete: Cascade)
 }
+
+model Post {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  imagea_link   String?
+  promt         String?
+  created_using String?
+  created_on    DateTime?
+  state         String
+  fb_link       String?
+  voted         Boolean
+  marks         Int
+}

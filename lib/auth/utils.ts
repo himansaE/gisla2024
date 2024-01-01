@@ -1,4 +1,4 @@
-import { User } from "next-auth";
+import type { User } from "next-auth";
 
 export type AuthError = {
   done: false;

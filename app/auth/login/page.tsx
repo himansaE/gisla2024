@@ -1,8 +1,6 @@
+import { blockAuth } from "@/lib/auth/guards";
 import { font_lato, font_poppins_one } from "@/lib/font";
 import { LoginForm } from "./form";
-import { auth } from "@/lib/auth/auth";
-import { redirect } from "next/navigation";
-import { blockAuth } from "@/lib/auth/guards";
 
 export default async function LoginPage({
   searchParams,
@@ -52,7 +50,11 @@ export default async function LoginPage({
         </h1>
 
         <div className={`${font_lato.className} px-4 xsm:px-10 mb-10`}>
-          <LoginForm error_text={error.text} error_in={error.err_in} />
+          <LoginForm
+            error_text={error.text}
+            error_in={error.err_in}
+            app_stage={process.env.APP_STAGE}
+          />
         </div>
       </div>
     </main>

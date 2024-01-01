@@ -1,14 +1,14 @@
 import NextAuth, { AuthError } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
 import { Provider } from "next-auth/providers";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { LoginUserAPI } from "./login";
 
+import google from "next-auth/providers/google";
 import {
   fromDate,
   generateSessionToken,
   prisma_auth_adapter,
 } from "./lib.auth";
-import google from "next-auth/providers/google";
 
 const credentials_provider = CredentialsProvider({
   name: "Credentials",

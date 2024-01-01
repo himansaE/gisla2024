@@ -1,14 +1,14 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { GoogleLogo } from "@/components/auth/google-logo";
 import { Checkbox } from "@/components/ui/checkbox";
 import { InputBox } from "@/components/ui/input-box";
 import { OrLine } from "@/components/ui/or-line";
 import Spinner from "@/components/ui/spinner";
-import Link from "next/link";
-import { useState } from "react";
 import { AuthError, AuthResponse, authError } from "@/lib/auth/utils";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export function local_validate(
   fname: FormDataEntryValue | null,
@@ -51,14 +51,18 @@ export function local_validate(
 
   return true;
 }
-export const RegisterForm = () => {
+export const RegisterForm = (props: { app_stage?: string }) => {
   const [submitting, setSubmitting] = useState(false);
   const [errorIn, setErrorIn] = useState("");
   const [is_oauth_submit, setIsOauthSubmit] = useState(false);
   const [errorText, SetErrorText] = useState("");
   const [showPass, setShowPass] = useState(false);
+  const [mode, setMode] = useState("");
   const router = useRouter();
 
+  useEffect(() => {
+    setMode(window.localStorage.getItem("mode") ?? "");
+  }, []);
   return (
     <>
       <form
@@ -94,6 +98,7 @@ export const RegisterForm = () => {
               password: form_data.get("password"),
               fname: form_data.get("first-name"),
               lname: form_data.get("last-name"),
+              mode: mode,
             }),
           })
             .then((i) => i.json())
@@ -184,6 +189,13 @@ export const RegisterForm = () => {
           type={showPass ? "text" : "password"}
           disabled={submitting}
         />
+        <input
+          type="hidden"
+          value={mode}
+          className="hidden"
+          tabIndex={-1}
+          name="mode"
+        />
         <div>
           <div className="flex items-center space-x-2">
             <Checkbox name="rules" id="rules" disabled={submitting} />
@@ -222,6 +234,14 @@ export const RegisterForm = () => {
         }`}
         onClick={async () => {
           if (submitting) return;
+          if (
+            props.app_stage === "DEV" &&
+            !(window.localStorage.getItem("mode") == "dev")
+          ) {
+            SetErrorText("Login is disabled in Development mode.");
+            setErrorIn("all");
+            return;
+          }
           setIsOauthSubmit(true);
           setSubmitting(true);
           await signIn("google");

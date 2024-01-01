@@ -1,6 +1,6 @@
+import { blockAuth } from "@/lib/auth/guards";
 import { font_lato, font_poppins_one } from "@/lib/font";
 import { RegisterForm } from "./form";
-import { blockAuth } from "@/lib/auth/guards";
 
 export default async function LoginPage() {
   await blockAuth();
@@ -17,7 +17,7 @@ export default async function LoginPage() {
         </h1>
 
         <div className="px-4 xsm:px-10 mb-10">
-          <RegisterForm />
+          <RegisterForm app_stage={process.env.APP_STAGE} />
         </div>
       </div>
       <div className="hidden lg:block bg-bg-main-2/30 w-full"></div>

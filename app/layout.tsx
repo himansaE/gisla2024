@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
-import "./globals.css";
 import { font_lato } from "@/lib/font";
+import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Gisla 2024",

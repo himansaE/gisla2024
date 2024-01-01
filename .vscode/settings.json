@@ -4,10 +4,20 @@
     "fname",
     "Gisla",
     "lname",
+    "lucide",
     "pasti",
     "Paytone",
     "signout",
     "sonner",
     "Unauth"
-  ]
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit",
+    "source.sortMembers": "explicit"
+  },
+  "editor.showUnused": true,
+  "typescript.inlayHints.enumMemberValues.enabled": true,
+  "typescript.inlayHints.parameterNames.enabled": "all",
+  "typescript.inlayHints.parameterTypes.enabled": true
 }

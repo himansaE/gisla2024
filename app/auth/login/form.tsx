@@ -4,9 +4,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { InputBox } from "@/components/ui/input-box";
 import { OrLine } from "@/components/ui/or-line";
 import Spinner from "@/components/ui/spinner";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 
 const local_validate = (
   email: FormDataEntryValue | null,
@@ -30,6 +30,7 @@ const local_validate = (
 export const LoginForm = (props: {
   error_text?: string;
   error_in?: string;
+  app_stage?: string;
 }) => {
   const [submitting, setSubmitting] = useState(false);
   const [is_oauth_submit, setIsOauthSubmit] = useState(false);
@@ -133,6 +134,14 @@ export const LoginForm = (props: {
         }`}
         onClick={async () => {
           if (submitting) return;
+          if (
+            props.app_stage === "DEV" &&
+            !(window.localStorage.getItem("mode") == "dev")
+          ) {
+            SetErrorText("Login is disabled in Development mode.");
+            setErrorIn("all");
+            return;
+          }
           setIsOauthSubmit(true);
           setSubmitting(true);
           await signIn("google");

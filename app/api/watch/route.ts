@@ -1,4 +1,5 @@
 import { collection } from "@/lib/mongodb/client";
+
 export const dynamic = "force-dynamic";
 
 export async function GET() {
