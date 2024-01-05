@@ -134,14 +134,7 @@ export const LoginForm = (props: {
         }`}
         onClick={async () => {
           if (submitting) return;
-          if (
-            props.app_stage === "DEV" &&
-            !(window.localStorage.getItem("mode") == "dev")
-          ) {
-            SetErrorText("Login is disabled in Development mode.");
-            setErrorIn("all");
-            return;
-          }
+
           setIsOauthSubmit(true);
           setSubmitting(true);
           await signIn("google");

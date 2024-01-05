@@ -46,7 +46,6 @@ export const {
   callbacks: {
     async jwt({ user }) {
       const token = generateSessionToken();
-      console.log(token);
       const session = await prisma_auth_adapter.createSession?.({
         expires: fromDate(30 * 24 * 60 * 60),
         sessionToken: token,

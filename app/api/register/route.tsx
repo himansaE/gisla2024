@@ -1,5 +1,5 @@
 import { registerWithPassword } from "@/lib/auth/register";
-import { NewResponse, authError } from "@/lib/auth/utils";
+import { NewAuthResponse, authError } from "@/lib/auth/utils";
 
 export async function POST(req: Request) {
   let body;
@@ -8,18 +8,12 @@ export async function POST(req: Request) {
   } catch (e) {}
 
   if (!body)
-    return NewResponse(
+    return NewAuthResponse(
       authError(
         "Something went wrong. Please try again later or contact support if the issue persists."
       )
     );
-  if (process.env.APP_STAGE === "DEV" && body.mode != "dev") {
-    return NewResponse(
-      authError(
-        "Registration is currently disabled until the event starts. Please check back later to sign up."
-      )
-    );
-  }
+
   //TODO:: implement security
 
   const res = await registerWithPassword(
@@ -29,5 +23,5 @@ export async function POST(req: Request) {
     body.password
   );
 
-  return NewResponse(res, 200);
+  return NewAuthResponse(res, 200);
 }

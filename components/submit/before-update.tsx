@@ -13,13 +13,15 @@ import {
 } from "@/components/ui/dialog";
 import { font_poppins_one } from "@/lib/font";
 import { Dispatch, SetStateAction, useState } from "react";
-import { FilePickerState } from "./file-picker";
+import { FilePickerState } from "./upload-box";
 
-export const BeforeDialog = () => {
+export const BeforeDialog = (props: { dragging: boolean }) => {
   return (
     <>
       <UploadCloud size={50} className="text-bg-main-2 animate" />
-      <p className="text-bg-main-2">Drag file or click to open file</p>
+      <p className="text-bg-main-2" draggable>
+        {props.dragging ? "Drop here" : "Drag file or click to open file"}
+      </p>
     </>
   );
 };
@@ -45,17 +47,21 @@ export const ConformUploadDialog = (props: {
           <DialogTitle className="text-2xl">Confirm Image Upload</DialogTitle>
           <DialogDescription>
             Ready to Enter the Generative AI Image Competition? Confirm Your
-            Upload to Get Started!
+            image to Get Started!
           </DialogDescription>
         </DialogHeader>
         <Center maxWidth="400px" className="py-4">
-          <Image
-            src={props.img}
-            alt=""
-            height={400}
-            width={400}
-            className="max-w-[400px] max-h-[400px] w-full h-full rounded-xl object-contain"
-          />
+          {props.img ? (
+            <Image
+              src={props.img ?? ""}
+              alt=""
+              height={400}
+              width={400}
+              className="max-w-[400px] max-h-[400px] w-full h-full rounded-xl object-contain"
+            />
+          ) : (
+            <div className="h-[400px] w-[400px] bg-bg-main-2/20 animate-pulse rounded-xl"></div>
+          )}
         </Center>
         <DialogFooter className="gap-y-3">
           <Button

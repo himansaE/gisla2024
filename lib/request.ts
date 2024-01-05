@@ -20,3 +20,9 @@ export const ResponseError = (
 ): ResponseError => {
   return { done: false, error: error, error_text };
 };
+
+export const NewResponse = (res: ResponseOutput | null, status?: number) => {
+  return new Response(res == null ? null : JSON.stringify(res), {
+    status: status,
+  });
+};

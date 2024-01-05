@@ -13,7 +13,7 @@ export type AuthDone = {
 
 export type AuthResponse = AuthDone | AuthError;
 
-export const NewResponse = (
+export const NewAuthResponse = (
   body: AuthResponse,
   statusCode?: number,
   headers?: HeadersInit

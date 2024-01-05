@@ -25,6 +25,8 @@ model User {
   Account       Account[]
   otp           otp[]
   Key           Key?
+  Post          Post?
+  Draft         Draft[]
 }
 
 model Session {
@@ -84,12 +86,21 @@ model otp {
 
 model Post {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  imagea_link   String?
+  user_id       String    @unique @db.ObjectId
+  image_link    String?
   promt         String?
   created_using String?
   created_on    DateTime?
   state         String
   fb_link       String?
   voted         Boolean
-  marks         Int
+  marks         Int?
+  user          User      @relation(references: [id], fields: [user_id], onDelete: Cascade)
+}
+
+model Draft {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  url     String
+  user_id String @unique @db.ObjectId
+  user    User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
 }
