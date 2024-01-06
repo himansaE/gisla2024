@@ -63,7 +63,7 @@ export const SubmitForm = (props: Props) => {
             />
           </div>
           <Image
-            className="rounded-lg bg-bg-main-2/10"
+            className="rounded-lg bg-bg-main-2/10 max-h-[500px] max-w-[500px] object-contain"
             unoptimized
             src={props.draft_img_url ?? ""}
             alt="image"
@@ -186,7 +186,8 @@ export const SubmitForm = (props: Props) => {
                 <label
                   htmlFor="terms1"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault();
                     if (agreed) return setAgreed(false);
                     showTermsDialog(true);
                   }}
