@@ -7,7 +7,10 @@ import sharp from "sharp";
 
 export async function POST(req: Request) {
   //#region  get session token
-  const token = cookies().get("authjs.session-token")?.value;
+  const token = cookies().get(
+    process.env.AUTH_TOKEN_NAME ?? "authjs.session-token"
+  )?.value;
+
   if (typeof token != "string")
     return NewResponse(ResponseError("Invalid session"), 401);
   //#endregion
