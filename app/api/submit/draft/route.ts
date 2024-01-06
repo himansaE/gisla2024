@@ -8,7 +8,8 @@ import sharp from "sharp";
 export async function POST(req: Request) {
   //#region  get session token
   const token = cookies().get("authjs.session-token")?.value;
-  if (typeof token != "string") return NewResponse(null, 401);
+  if (typeof token != "string")
+    return NewResponse(ResponseError("Invalid session"), 401);
   //#endregion
 
   //#region validate input
@@ -42,7 +43,8 @@ export async function POST(req: Request) {
     },
   });
 
-  if (!db_token) return NewResponse(null, 401);
+  if (!db_token)
+    return NewResponse(ResponseError("invalid session token"), 401);
   if (db_token.expires < new Date())
     return NewResponse(
       ResponseError("Session expired. Please reload the page and try again.")
