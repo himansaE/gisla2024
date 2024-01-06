@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { NewResponse, ResponseDone, ResponseError } from "@/lib/request";
 import { readFile } from "fs/promises";
 import { cookies } from "next/headers";
+import path from "path";
 import sharp from "sharp";
 
 export async function POST(req: Request) {
@@ -66,7 +67,7 @@ export async function POST(req: Request) {
   // #endregion
 
   // #region adding watermark
-  const watermark = await readFile("./public/images/watermark.png");
+  const watermark = await readFile(path.resolve("public/images/watermark.png"));
   let final_buffer: Buffer;
   try {
     final_buffer = await sharp(await file.arrayBuffer())
