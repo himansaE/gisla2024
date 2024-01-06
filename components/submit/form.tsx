@@ -2,8 +2,10 @@
 
 import { font_poppins_one } from "@/lib/font";
 import { Edit2Icon } from "lucide-react";
+import { User } from "next-auth";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Center } from "../ui/center";
 import { Checkbox } from "../ui/checkbox";
@@ -26,6 +28,7 @@ type Props = {
   draft_img_url?: string;
   draft_id?: string;
   file?: File;
+  user: User;
 };
 export const SubmitForm = (props: Props) => {
   const [is_submitting, setSubmitting] = useState(false);
@@ -73,10 +76,63 @@ export const SubmitForm = (props: Props) => {
         <h2 className={`font-bold text-2xl mt-2 lg:mt-20 mb-6`}>
           Enter Detailed Information About Your Artwork.
         </h2>
-        <div
+        {error_in === "all" ? (
+          <div className="text-sm text-destructive ">{error}</div>
+        ) : (
+          <></>
+        )}
+        <form
           className={`font-normal flex flex-col gap-5  ${
             is_submitting ? "opacity-85" : ""
           }`}
+          onSubmit={async (e) => {
+            e.preventDefault();
+            if (is_submitting) return;
+            setSubmitting(true);
+            setErrorIn("");
+            setError("");
+            const form_data = new FormData(e.currentTarget);
+            const val = local_validate(form_data);
+            if (val != null) {
+              setError(val[0]);
+              return setErrorIn(val[1]);
+            }
+            if (!agreed) {
+              setError(
+                "you must agree to the terms and conditions before submitting."
+              );
+              return setErrorIn("terms");
+            }
+            const res = await fetch("/api/submit", {
+              method: "POST",
+              body: JSON.stringify({
+                title: form_data.get("title"),
+                des: form_data.get("des"),
+                prompt: form_data.get("prompt"),
+                used: form_data.get("ai-used"),
+                draft: props.draft_id,
+                user: props.user.id,
+              }),
+            })
+              .then((i) => i.json())
+              .then((i) => {
+                if (i.done) {
+                  console.log(i);
+                  // navigate
+                  toast.success("Submission successful.");
+                } else {
+                  setError(i.error_text);
+                  setErrorIn("all");
+                  setSubmitting(false);
+                }
+              })
+              .catch(() => {
+                setError("Something went wrong Try again.");
+                setErrorIn("all");
+                setSubmitting(false);
+                toast.error("Something went wrong. Try again.");
+              });
+          }}
         >
           <InputBox
             title="Artwork Title"
@@ -88,7 +144,7 @@ export const SubmitForm = (props: Props) => {
           />
           <InputBox
             title="Description about Artwork"
-            name="title"
+            name="des"
             disabled={is_submitting}
             placeholder="Give a short Description for your artwork"
             inpError={error_in}
@@ -105,7 +161,7 @@ export const SubmitForm = (props: Props) => {
           />
           <InputBox
             title="Generated using"
-            name="prompt"
+            name="ai-used"
             disabled={is_submitting}
             placeholder="AI used to generate this artwork."
             errorText={error}
@@ -116,10 +172,12 @@ export const SubmitForm = (props: Props) => {
             <div className="flex flex-row gap-2 items-top px-2">
               <Checkbox
                 id="terms1"
-                name="remember-me"
+                name="terms"
                 checked={agreed}
+                disabled={is_submitting}
                 className="mt-1"
                 onClick={() => {
+                  if (is_submitting) return;
                   if (agreed) return setAgreed(false);
                   showTermsDialog(true);
                 }}
@@ -140,7 +198,7 @@ export const SubmitForm = (props: Props) => {
                   to the terms and conditions of the GISLA 2024 AI Art
                   Competition.
                 </p>
-                {error_in === "rules" ? (
+                {error_in === "terms" ? (
                   <div className="text-sm text-destructive ">{error}</div>
                 ) : (
                   <></>
@@ -154,20 +212,21 @@ export const SubmitForm = (props: Props) => {
               </div>
             </div>
           </div>
-          <Button
-            disabled={is_submitting}
-            onClick={() => {
-              if (is_submitting) return;
-              setSubmitting(true);
-            }}
-            className="gap-3"
-          >
+          <Button disabled={is_submitting} className="gap-3">
             {is_submitting ? <Spinner /> : <></>}Submit Artwork
           </Button>
-        </div>
+        </form>
       </Center>
     </div>
   );
+};
+
+const local_validate = (data: FormData) => {
+  const arr = Array.from(data);
+  for (const i of arr) {
+    if (i[1].toString().trim() == "") return ["This field is required.", i[0]];
+  }
+  return null;
 };
 
 const TermsDialog = (props: {

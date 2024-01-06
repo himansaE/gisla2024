@@ -85,17 +85,19 @@ model otp {
 }
 
 model Post {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  user_id       String    @unique @db.ObjectId
-  image_link    String?
-  promt         String?
-  created_using String?
-  created_on    DateTime?
-  state         String
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  user_id       String   @unique @db.ObjectId
+  image_link    String
+  prompt        String
+  title         String
+  des           String
+  created_using String
+  created_on    DateTime @default(now())
+  state         String   @default("1")
   fb_link       String?
-  voted         Boolean
+  voted         Boolean  @default(false)
   marks         Int?
-  user          User      @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  user          User     @relation(references: [id], fields: [user_id], onDelete: Cascade)
 }
 
 model Draft {

@@ -39,6 +39,7 @@ export const SubmitClient = (props: Props) => {
       draft_id={draft_id}
       draft_img_url={draft_img_url}
       file={file}
+      user={props.user}
     />
   );
 };
