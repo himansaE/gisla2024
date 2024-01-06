@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import prisma from "@/lib/prisma";
 import { NewResponse, ResponseDone, ResponseError } from "@/lib/request";
 import { cookies } from "next/headers";

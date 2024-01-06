@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { registerWithPassword } from "@/lib/auth/register";
 import { NewAuthResponse, authError } from "@/lib/auth/utils";
 

@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { s3UploadFile } from "@/lib/aws/s3";
 import prisma from "@/lib/prisma";
 import { NewResponse, ResponseDone, ResponseError } from "@/lib/request";
