@@ -1,14 +1,14 @@
 "use client";
-import { GoogleLogo } from "@/components/auth/google-logo";
 import { Checkbox } from "@/components/ui/checkbox";
 import { InputBox } from "@/components/ui/input-box";
-import { OrLine } from "@/components/ui/or-line";
 import Spinner from "@/components/ui/spinner";
 import { AuthError, AuthResponse, authError } from "@/lib/auth/utils";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+// import { GoogleLogo } from "@/components/auth/google-logo";
+// import { OrLine } from "@/components/ui/or-line";
+// import { signIn } from "next-auth/react";
 
 export function local_validate(
   fname: FormDataEntryValue | null,
@@ -215,7 +215,7 @@ export const RegisterForm = (props: { app_stage?: string }) => {
           )}
         </button>
       </form>
-      <OrLine />
+      {/* <OrLine />
       <button
         className={`flex gap-[10px] px-3 items-center justify-center w-full my-10 rounded-md border-gray-300 border-[1.5px]  transition-colors ${
           submitting ? "opacity-60 cursor-default" : "hover:bg-gray-100/70"
@@ -229,7 +229,7 @@ export const RegisterForm = (props: { app_stage?: string }) => {
       >
         <GoogleLogo />
         Sign up with Google
-      </button>
+      </button> */}
 
       <p className="text-sm text-center">
         Already have an account?{" "}
