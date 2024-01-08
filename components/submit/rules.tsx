@@ -1,87 +1,94 @@
-export const RulesText = () => {
+export const RulesText = (props: { hide_heading?: boolean }) => {
   return (
     <div className="mx-4 my-2 flex flex-col gap-3 [&_b]:font-semibold ">
-      <h2 className="font-semibold text-xl">
-        Gisla AI Art Competition Rules and Regulations
-      </h2>
+      {props.hide_heading ? (
+        <></>
+      ) : (
+        <h2 className="font-semibold text-xl">
+          Gisla AI Art Competition Rules and Regulations
+        </h2>
+      )}
       <div>
-        <b>Theme:</b> All submitted artwork must align with the
-        competition&apos;s theme, &quot;A Global Call for Climate Action,&quot;
-        reflecting a commitment to addressing environmental concerns through
-        artistic expression.
-      </div>
+        <div className="flex gap-3 flex-col">
+          <div>
+            <b>Theme:</b> Art must be under the theme “A Global Call for Climate
+            Action”
+          </div>
 
-      <div>
-        <b>Eligibility:</b> The competition is open to individuals worldwide who
-        possess a keen interest in the intersection of digital AI art and
-        climate change.
-      </div>
+          <div>
+            <b>Eligibility:</b> Open to all individuals worldwide with an
+            interest in digital AI art and climate change.
+          </div>
 
-      <div>
-        <b>Artistic Mediums:</b> Participants are granted the creative freedom
-        to employ any digital platform of their choice, be it Midjourney,
-        Artsmart, or other AI art generators, to craft their submissions.
-      </div>
+          <div>
+            <b>Artistic Mediums:</b> You have the freedom to use any digital
+            platform of your choice, such as Midjourney, Artsmart, or other AI
+            art generators.
+          </div>
 
-      <div>
-        <b>Copyrights:</b> Entrants are required to be the rightful owners of
-        their submitted artworks, ensuring compliance with copyright and
-        intellectual property regulations. It is imperative to maintain complete
-        ownership of the copyrights and intellectual property rights associated
-        with each submitted piece.
-      </div>
+          <div>
+            <b>Copyrights:</b> You must be the rightful owner of your artwork.
+            Ensure your artworks do not violate any copyrights or intellectual
+            property rights of others. You must maintain full ownership of the
+            copyrights and intellectual property rights associated with your
+            artwork.
+          </div>
 
-      <div>
-        <b>Voting Process:</b> During the voting phase, every participant is
-        afforded the freedom to cast their vote for their preferred artwork. The
-        competition upholds the integrity of the process by strictly prohibiting
-        fake votes.
-      </div>
+          <div>
+            <b>Voting:</b> During the voting round anyone has the freedom to
+            vote for their favorite artwork, and fake votes are not permitted.
+          </div>
 
-      <div>
-        <b>Participant Warranties:</b> All information provided during the
-        submission process is expected to be true, accurate, and complete.
-        Entrants further warrant that their submitted artworks are original and
-        do not contain any defamatory, offensive, or illegal content.
-      </div>
+          <div>
+            <b>Participant Warranties:</b> You warrant that all information
+            provided during submission is true, accurate, and complete. You
+            further warrant that your artworks are original and do not contain
+            any defamatory, offensive, or illegal content.
+          </div>
 
-      <div>
-        <b>Disqualification Criteria:</b> The organizers retain the right to
-        disqualify any participant found to be in violation of the competition
-        rules, engaging in cheating practices, or compromising the fairness of
-        the event.
-      </div>
+          <div>
+            <b>Disqualification:</b> The competition organizers can disqualify
+            anyone who breaks the rules, cheats, or harms the competition&apos;s
+            fairness.
+          </div>
 
-      <div>
-        <b>Submission Process:</b>
-        <ul className="list-disc ml-8">
-          <li>
-            Artworks must be submitted electronically through the designated
-            portal.
-          </li>
-          <li>Each participant is allowed a maximum of three submissions.</li>
-          <li>
-            A brief description or artist statement, elucidating the inspiration
-            and intended message behind each artwork, is required.
-          </li>
-          <li>
-            Submission files should adhere to the following specifications: PNG,
-            PDF, JPG, or JPEG format with a minimum resolution of 1280 x 1280
-            pixels. Additionally, a project file with layers must be included.
-          </li>
-          <li>
-            Submissions are to be made exclusively through the official
-            competition website.
-          </li>
-          <li>
-            Participants will receive notifications via email regarding the
-            status of their submitted artworks.
-          </li>
-          <li>
-            The decisions of the esteemed judge panel, with their wealth of
-            expertise, will stand as the final rulings for the competition.
-          </li>
-        </ul>
+          <div className="my-4">
+            <b>Submission Process:</b>
+            <ul className="list-disc ml-10">
+              <li>
+                You must submit your artwork electronically through the
+                designated submission portal.
+              </li>
+              <li>A maximum of 3 arts per person can be submitted.</li>
+              <li>
+                You must include a brief description or artist statement
+                explaining the inspiration and message behind your artwork.
+              </li>
+              <li>
+                The submission file should be in PNG, PDF, JPG, or JPEG format
+                with a minimum resolution of 1280 x 1280 pixels and include a
+                project file with layers.
+              </li>
+              <li>
+                Submissions should be made through the official competition
+                website.
+              </li>
+              <li>You will be informed via email if your art is selected.</li>
+            </ul>
+          </div>
+
+          <div>
+            <b>Judge Panel&apos;s Decision:</b> The judge panel&apos;s decision
+            is the final decision.
+          </div>
+
+          <span className="block my-2">
+            <i>
+              By submitting your artworks, you confirm that you&apos;ve read,
+              understood, and agreed to the rules & regulations stated above.
+            </i>
+          </span>
+        </div>
       </div>
     </div>
   );

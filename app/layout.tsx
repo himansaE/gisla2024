@@ -1,5 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
-import { font_lato } from "@/lib/font";
+import { font_poppins_one } from "@/lib/font";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={font_lato.className}>
+      <body className={font_poppins_one.className}>
         {children}
         <Toaster closeButton richColors theme="light" />
       </body>
