@@ -14,7 +14,7 @@ export const TutorialPage = () => {
         <BoxBg className="left-[50%] top-[150vh] origin-top rotate-90" />
       </div>
       <div className="flex justify-center my-4 text-sm">
-        <div className="bg-[#153938] px-3 py-0.5 rounded-2xl flex items-center">
+        <div className="bg-[#153938] px-3 py-0.5 rounded-2xl flex items-center ">
           Tutorial
         </div>
       </div>
@@ -22,7 +22,7 @@ export const TutorialPage = () => {
         Here is how to Participate <br /> Gisla 2024.
       </h1>
       <Center maxWidth="1000px">
-        <div className="py-16 gap-y-16 flex flex-col md:grid grid-cols-6 justify-items-center">
+        <div className="py-16 gap-y-16 flex flex-col md:grid grid-cols-6 justify-items-center al items-center md:items-start">
           <StepBox
             index={1}
             title="Image Generation"
