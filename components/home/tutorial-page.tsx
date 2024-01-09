@@ -22,21 +22,34 @@ export const TutorialPage = () => {
         Here is how to Participate <br /> Gisla 2024.
       </h1>
       <Center maxWidth="1000px">
-        <div className="py-16 gap-y-16 flex flex-col md:grid grid-cols-6 justify-items-center items-center">
+        <div className="py-16 gap-y-16 flex flex-col md:grid grid-cols-6 justify-items-center">
           <StepBox
             index={1}
-            img="/images/_1a56cbfb-fb50-4bd5-a8b3-b8ea85372a13.jpeg"
+            title="Image Generation"
+            img="/assets/tutorial-1.webp"
             className="col-span-6 col-start-1"
+            des="You have the freedom to use any digital platform to generate images, such as Midjourney, Artsmart, or other Al art generators and arts should be under the theme."
           />
           <StepBox
             index={2}
-            img="/images/_1a56cbfb-fb50-4bd5-a8b3-b8ea85372a13.jpeg"
+            title="Registration"
+            des="Individually register through our official website's registration section with your correct details."
+            img="/assets/tutorial-2.webp"
             className="col-span-3 col-start-1"
           />
           <StepBox
             index={3}
-            img="/images/_1a56cbfb-fb50-4bd5-a8b3-b8ea85372a13.jpeg"
+            img="/assets/tutorial-3.webp"
             className="col-span-3 col-start-4"
+            title="Submission"
+            des="Submit your original artwork electronically through our website. A maximum of 3 arts can be submitted and read the submission guidelines before submitting."
+          />
+          <StepBox
+            index={4}
+            img="/assets/tutorial-4.webp"
+            className="col-span-6 col-start-1"
+            title="Announcing Winners"
+            des="You will be informed via email if your art is selected and winners will be announced through the IEEE Student branch of SLTC Facebook page."
           />
         </div>
       </Center>
@@ -46,8 +59,9 @@ export const TutorialPage = () => {
 
 const StepBox = (props: {
   img: string;
-  title?: string;
+  title: string;
   className?: string;
+  des: string;
   index: number;
 }) => {
   return (
@@ -69,11 +83,8 @@ const StepBox = (props: {
         className="rounded-lg"
       />
       <div className="flex flex-col gap-3 ">
-        <h2 className="text-xl font-semibold">Title of the task</h2>
-        <div className="text-sm text-gray-300">
-          a little description like this describing what this step about. The
-          paragraph should contain this amount of content
-        </div>
+        <h2 className="text-xl font-semibold">{props.title}</h2>
+        <div className="text-xs text-gray-300">{props.des}</div>
       </div>
     </div>
   );
