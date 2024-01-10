@@ -8,7 +8,7 @@ export const HomeTerms = () => {
   const [show, setShow] = useState(false);
   return (
     <section className="pt-16 pb-6 px-4 md:pl-20 bg-bg-main-2 text-white">
-      <h1 className="text-3xl md:text-5xl text-center font-semibold md:pr-20 pb-8 md:pb-16 leading-snug md:leading-4">
+      <h1 className="text-3xl md:text-5xl text-center font-semibold md:pr-20 pb-8 md:pb-16 leading-snug md:leading-tight">
         Gisla AI Art Competition Rules and Regulations
       </h1>
       <div className="grid xl:grid-cols-2">

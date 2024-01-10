@@ -19,7 +19,7 @@ export const TutorialPage = () => {
         </div>
       </div>
       <h1 className="text-5xl font-semibold text-center leading-snug md:leading-relaxed">
-        Here is how to Participate <br /> Gisla 2024.
+        Here is how to Participate <br /> GISLA 2024.
       </h1>
       <Center maxWidth="1000px">
         <div className="py-16 gap-y-16 flex flex-col md:grid grid-cols-6 justify-items-center al items-center md:items-start">
