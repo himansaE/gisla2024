@@ -7,7 +7,13 @@ export const IntroButton = async () => {
 
   return (
     <Link
-      href={user?.user ? "/submit" : "/auth/register"}
+      href={
+        process.env.testing === "1"
+          ? "#"
+          : user?.user
+          ? "/submit"
+          : "/auth/register"
+      }
       className="rounded-2xl"
     >
       <div
