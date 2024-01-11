@@ -82,4 +82,14 @@
   body {
     @apply bg-background text-foreground;
   }
+  @keyframes reveal {
+    from {
+      opacity: 0.5;
+      transform: scale(0.7);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 }

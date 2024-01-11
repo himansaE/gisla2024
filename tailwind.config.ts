@@ -12,6 +12,7 @@ module.exports = {
       center: true,
       padding: "2rem",
       screens: {
+        mob: "460px",
         "2xl": "1400px",
       },
     },
@@ -91,6 +92,13 @@ module.exports = {
             margin: "-2.25rem 0 0 0",
           },
         },
+        reveal: {
+          from: {
+            opacity: "0.5",
+            transform: "scale(0.7)",
+          },
+          to: { opacity: "1", transform: "scale(1)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -98,6 +106,7 @@ module.exports = {
         "margin-up": "margin-up 0.5s forwards",
         "margin-up-sm": "margin-up-sm 0.5s forwards",
         "margin-up-md": "margin-up-md 0.5s forwards",
+        reveal: "auto linear reveal both",
       },
       screens: {
         xsm: "420px",

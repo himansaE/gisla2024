@@ -68,12 +68,56 @@ export async function POST(req: Request) {
     );
   // #endregion
 
+  const buffer = await file.arrayBuffer();
+
+  // #region get metadata
+  let metadata: sharp.Metadata;
+  const overlay_metadata = { height: 199, width: 420 };
+
+  try {
+    metadata = await sharp(buffer).metadata();
+  } catch (e) {
+    return NewResponse(
+      ResponseError(
+        "Invalid image submitted. Please upload a valid image file."
+      )
+    );
+  }
+
+  const targetWidth = Math.floor(
+    metadata.width ? metadata.width * 0.2 : overlay_metadata.width
+  );
+  const targetHeight = Math.floor(
+    metadata.height ? metadata.height * 0.2 : overlay_metadata.height
+  );
+
+  const overlayAspectRatio = overlay_metadata.width / overlay_metadata.height;
+
+  let newWidth, newHeight;
+
+  if (targetWidth / overlayAspectRatio < targetHeight) {
+    newWidth = targetWidth;
+    newHeight = Math.floor(newWidth / overlayAspectRatio);
+  } else {
+    newHeight = targetHeight;
+    newWidth = Math.floor(newHeight * overlayAspectRatio);
+  }
+
+  // #endregion
+
   // #region adding watermark
   const watermark = await readFile(path.resolve("public/images/watermark.png"));
   let final_buffer: Buffer;
   try {
-    final_buffer = await sharp(await file.arrayBuffer())
-      .composite([{ input: watermark, gravity: sharp.gravity.southeast }])
+    final_buffer = await sharp(buffer)
+      .composite([
+        {
+          input: await sharp(watermark)
+            .resize({ height: newHeight, width: newWidth })
+            .toBuffer(),
+          gravity: sharp.gravity.southeast,
+        },
+      ])
       .toBuffer();
   } catch (e) {
     return NewResponse(

@@ -7,9 +7,12 @@ import { RulesText } from "../submit/rules";
 export const HomeTerms = () => {
   const [show, setShow] = useState(false);
   return (
-    <section className="pt-16 pb-6 px-4 md:pl-20 bg-bg-main-2 text-white">
-      <h1 className="text-3xl md:text-5xl text-center font-semibold md:pr-20 pb-8 md:pb-16 leading-snug md:leading-tight">
-        Gisla AI Art Competition Rules and Regulations
+    <section
+      className="pt-16 pb-6 px-4 md:pl-20 bg-bg-main-2 text-white"
+      id="rules"
+    >
+      <h1 className="text-5xl px-6 text-center font-semibold md:pr-20 pb-8 md:pb-16 leading-tight">
+        Rules and Regulations
       </h1>
       <div className="grid xl:grid-cols-2">
         <div>

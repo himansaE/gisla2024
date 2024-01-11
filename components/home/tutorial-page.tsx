@@ -18,7 +18,7 @@ export const TutorialPage = () => {
           Tutorial
         </div>
       </div>
-      <h1 className="text-5xl font-semibold text-center leading-snug md:leading-relaxed">
+      <h1 className="text-5xl px-6 font-semibold text-center leading-snug md:leading-relaxed">
         Here is how to Participate <br /> GISLA 2024.
       </h1>
       <Center maxWidth="1000px">
@@ -68,7 +68,7 @@ const StepBox = (props: {
     <div
       className={`${
         props.className ?? ""
-      } max-w-[300px] flex flex-col items-center text-center gap-5 relative`}
+      } max-w-[300px] flex flex-col items-center text-center gap-5 relative `}
     >
       <div
         className={`${font_pasti.className} absolute top-[-10px] left-5 h-16 w-16 text-6xl bg-black  rounded-xl flex justify-center items-center`}
@@ -90,9 +90,14 @@ const StepBox = (props: {
   );
 };
 
-const BoxBg = (props: { className?: string }) => {
+export const BoxBg = (props: { className?: string }) => {
   return (
-    <div className={cn("absolute top-0 left-0 w-full h-full", props.className)}>
+    <div
+      className={cn(
+        "absolute top-0 left-0 w-full h-full -z-10",
+        props.className
+      )}
+    >
       <div
         className="w-full h-96 opacity-80"
         style={{

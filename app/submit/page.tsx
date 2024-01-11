@@ -30,7 +30,7 @@ export default async function Page() {
         <h1 className="text-3xl font-semibold">
           GISLA 2024 AI ART COMPETITION
         </h1>
-        <p>Submit Your Image via Upload</p>
+        <p className="">{3 - posts_count} Submissions left.</p>
         <SubmitClient user={user} draft_id={draft?.id} img_url={draft?.url} />
       </Center>
     </section>

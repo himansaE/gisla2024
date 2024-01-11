@@ -63,7 +63,7 @@ export const SubmitForm = (props: Props) => {
             />
           </div>
           <Image
-            className="rounded-lg bg-bg-main-2/10 max-h-[500px] max-w-[500px] object-contain"
+            className="rounded-lg bg-bg-main-2/10 max-h-[500px] max-w-full object-contain"
             unoptimized
             src={props.draft_img_url ?? ""}
             alt="image"

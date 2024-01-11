@@ -1,8 +1,10 @@
 import { blockAuth } from "@/lib/auth/guards";
 import { font_lato, font_poppins_one } from "@/lib/font";
+import { redirect } from "next/navigation";
 import { RegisterForm } from "./form";
 
 export default async function LoginPage() {
+  if (process.env.testing === "1") return redirect("/");
   await blockAuth();
   return (
     <main

@@ -1,5 +1,6 @@
 import { blockAuth } from "@/lib/auth/guards";
 import { font_lato, font_poppins_one } from "@/lib/font";
+import { redirect } from "next/navigation";
 import { LoginForm } from "./form";
 
 export default async function LoginPage({
@@ -7,6 +8,7 @@ export default async function LoginPage({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  if (process.env.testing === "1") return redirect("/");
   await blockAuth();
   let error = { text: "", err_in: "" };
   if (searchParams != undefined) {
