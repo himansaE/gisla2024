@@ -3,20 +3,22 @@ import Link from "next/link";
 import { BoxBg } from "./tutorial-page";
 export const Footer = () => {
   return (
-    <footer className="bg-black text-white border-t-[1px] border-white/25 overflow-hidden pt-16 pb-10  px-3 relative">
+    <footer className="bg-black text-white border-t-[1px] border-white/25 overflow-hidden pt-24 pb-5  px-3 relative">
       <div className="absolute">
         <BoxBg />
       </div>
       <div className="flex flex-col justify-center items-center">
-        <p className="text-sm">Proudly Present By</p>
+        <p className="text-sm pb-2">Proudly Present By</p>
         <Image
-          src="/images/IEEE logo white.webp"
+          src="/images/logo-bar h.webp"
           alt="IEEE SLTC"
           height={93}
           width={200}
+          unoptimized
+          className="h-[63.78px] w-[300px] sm:h-[74.4px] sm:w-[350px] object-contain"
         />
       </div>
-      <div className="flex justify-evenly pt-10">
+      <div className="flex justify-evenly pt-16">
         <div className="flex flex-col items-start gap-1">
           {in_links.map((i) => (
             <Link href={i[1]} key={i[0]} className="hover:underline">
@@ -32,16 +34,13 @@ export const Footer = () => {
           ))}
         </div>
       </div>
-      {/* <div className="text-5xl sm:text-8xl md:text-9xl text-center font-black my-14 w-full ">
-        {"GISLA 2024".split("").map((i) => (
-          <span
-            key={i}
-            className="opacity-5 hover:opacity-30 transition-opacity select-none cursor-default"
-          >
-            {i}
-          </span>
-        ))}
-      </div> */}
+      <div className="text-center text-sm pt-10 text-gray-300">
+        Copyright © GISLA 2024 • IEEE Student Branch SLTC <br />
+        Designed & developed by{" "}
+        <Link href="https://www.linkedin.com/in/himanse/" className="underline">
+          Himansa Wickramasinghe
+        </Link>
+      </div>
     </footer>
   );
 };

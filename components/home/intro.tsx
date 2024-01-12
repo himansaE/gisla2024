@@ -1,9 +1,9 @@
 "use client";
-import { IntroCanvas } from "./intro-canvas";
-import { useEffect, useRef } from "react";
 import { font_poppins_one } from "@/lib/font";
-import { Timer } from "./timer";
 import Image from "next/image";
+import { useEffect, useRef } from "react";
+import { IntroCanvas } from "./intro-canvas";
+import { Timer } from "./timer";
 
 export const IntroComponent = () => {
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -53,7 +53,7 @@ export const IntroComponent = () => {
         <Timer />
       </div>
       <div
-        className="flex flex-col gap-1 items-center pb-24"
+        className="flex flex-col gap-1 items-center pb-24 mix-blend-exclusion"
         onMouseMove={mouseMove}
         onTouchMove={touchMove}
       >
@@ -62,6 +62,8 @@ export const IntroComponent = () => {
           alt="Gisla 2024 logo"
           height={136.62}
           width={300}
+          className="object-contain "
+          priority={false}
         />
         <h1 className="text-2xl text-white font-extrabold px-5 text-center">
           The Global AI Art Competition

@@ -1,7 +1,7 @@
 "use client";
 
 import { COMPETITION_START_DATE } from "@/lib/constants";
-import { font_lato, font_pasti } from "@/lib/font";
+import { font_pasti, font_poppins_one } from "@/lib/font";
 import { useEffect, useState } from "react";
 
 const timeDiff = () => {
@@ -44,11 +44,11 @@ export const Timer = () => {
         <TimerNumber n={time.sec} title="Secs" className="xsm:flex hidden " />
       </div>
       <div
-        className={`${font_lato.className}  md:text-xl text-white font-semibold text-center `}
+        className={`${font_poppins_one.className}   text-white fon text-center `}
       >
         {" "}
         Registration Open in{" "}
-        <span className="text-green-400">
+        <span className="text-[#adffb8] font-semibold">
           14<sup>th</sup> Jan 2024
         </span>
       </div>
