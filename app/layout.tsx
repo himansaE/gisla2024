@@ -1,5 +1,6 @@
 import { Toaster } from "@/components/ui/sonner";
 import { font_poppins_one } from "@/lib/font";
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -39,6 +40,7 @@ export default function RootLayout({
       <body className={font_poppins_one.className}>
         {children}
         <Toaster closeButton richColors theme="light" />
+        <Analytics />
       </body>
     </html>
   );
