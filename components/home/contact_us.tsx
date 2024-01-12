@@ -38,17 +38,17 @@ const contact_data = [
 
 export const ContactsUs = () => {
   return (
-    <section className="pb-10 pt-16 text-white  relative">
+    <section className="pb-10 pt-16 text-white  relative" id="contact_us">
       <div className="flex justify-center my-4 text-sm">
         <div className="bg-[#153938] px-3 py-0.5 rounded-2xl flex items-center ">
-          Contact Us
+          Meet Our Team
         </div>
       </div>
       <div className="absolute top-0 left-0 w-full h-full bg-black z-[-10]">
         <BoxBg />
       </div>
       <h1 className="text-5xl px-6 font-semibold text-center leading-snug md:leading-relaxed">
-        Meet Our Team
+        Further Information <br /> Contact Us
       </h1>
 
       <div className="flex pb-8 pt-12 px-2 md:px-20 2xl:px-60 gap-x-16 gap-y-8 flex-wrap justify-center">
