@@ -109,7 +109,6 @@ const validate_input = (
   user_id?: string,
   draft_id?: string
 ) => {
-  console.log(user_id, draft_id);
   for (const key in data) {
     if (typeof data[key] !== "string" || data[key]?.trim() == "") {
       return "All fields are required";

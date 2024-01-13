@@ -1,3 +1,4 @@
+import { NavBar } from "@/components/navbar/server";
 import { Toaster } from "@/components/ui/sonner";
 import { font_poppins_one } from "@/lib/font";
 import { Analytics } from "@vercel/analytics/react";
@@ -38,6 +39,7 @@ export default function RootLayout({
         <meta property="og:image" content="/og-image.jpg" />
       </head>
       <body className={font_poppins_one.className}>
+        <NavBar />
         {children}
         <Toaster closeButton richColors theme="light" />
         <Analytics />
