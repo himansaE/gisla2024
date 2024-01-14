@@ -107,7 +107,7 @@ export const NavBarClient = (props: { user: Session | null }) => {
           </div>
         </div>
       </div>
-      <div className={`h-16 w-full${path == "/" ? "hidden" : ""}`}></div>
+      <div className={`h-16 w-full ${path == "/" ? "hidden" : ""}`}></div>
     </>
   );
 };
