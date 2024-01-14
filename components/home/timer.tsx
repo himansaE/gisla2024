@@ -5,6 +5,7 @@ import { font_pasti, font_poppins_one } from "@/lib/font";
 import { useEffect, useState } from "react";
 
 const timeDiff = () => {
+  console.log(COMPETITION_START_DATE);
   let diff = COMPETITION_START_DATE.getTime() - new Date().getTime();
   const now_unformatted = [
     diff / 1000,
