@@ -73,7 +73,7 @@ export const NavBarClient = (props: { user: Session | null }) => {
         </div>
       </nav>
       <div
-        className={`fixed h-screen w-screen z-50 top-0 left-0 bg-white backdrop-blur-lg md:hidden ${
+        className={`fixed h-screen w-screen z-30 top-0 left-0 bg-white backdrop-blur-lg md:hidden ${
           side_nav ? "flex flex-col gap-10" : "hidden"
         }`}
       >
