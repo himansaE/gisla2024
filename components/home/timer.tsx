@@ -30,7 +30,9 @@ export const Timer = () => {
   const [time, setTime] = useState(timeDiff());
 
   useEffect(() => {
+    timeDiff();
     const t = setInterval(() => setTime(timeDiff()), 1000);
+
     return () => clearInterval(t);
   }, []);
 
