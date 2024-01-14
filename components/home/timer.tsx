@@ -8,7 +8,7 @@ const timeDiff = () => {
   const now_unformatted = [
     diff / 1000,
     diff / 1000 / 60,
-    diff / 1000 / 60 / 60,
+    diff / 1000 / 60 / 60 - 6,
     diff / 1000 / 60 / 60 / 24,
   ].map((i) => Math.floor(i));
   const format = [60, 60, 24, 1000];
