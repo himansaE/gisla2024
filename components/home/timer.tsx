@@ -1,11 +1,10 @@
 "use client";
 
-import { COMPETITION_START_DATE } from "@/lib/constants";
 import { font_pasti, font_poppins_one } from "@/lib/font";
 import { useEffect, useState } from "react";
 
 const timeDiff = () => {
-  let diff = COMPETITION_START_DATE.getTime() - new Date().getTime();
+  let diff = new Date(2024, 0, 14, 20, 0, 0).getTime() - new Date().getTime();
   const now_unformatted = [
     diff / 1000,
     diff / 1000 / 60,
