@@ -56,9 +56,9 @@ export const Timer = () => {
         className={`${font_poppins_one.className} text-white fon text-center text-sm sm:text-base`}
       >
         {" "}
-        Registration Open in{" "}
+        Competition ends on{" "}
         <span className="text-[#adffb8] font-semibold">
-          14<sup>th</sup> Jan 2024
+          31<sup>st</sup> Jan 2024
         </span>
       </div>
     </div>

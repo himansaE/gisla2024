@@ -8,6 +8,17 @@ export default async function LoginPage() {
     <main
       className={`${font_lato.className} grid lg:grid-cols-2 justify-items-center`}
     >
+      <div className="hidden lg:block bg-bg-main-2 w-full">
+        <div
+          className={`${font_poppins_one.className}  hidden lg:flex bg-bg-main-2 w-full h-screen sticky top-0 flex-col justify-center text-white font-bold px-[2vw] `}
+        >
+          <h1 className="text-5xl mt-auto">Welcome creators</h1>
+          <p className="font-normal text-sm mb-20 text-white/80">
+            Register to participate on Gisla 2024 : The Worldwide Awards.
+            It&apos;s free.
+          </p>
+        </div>
+      </div>{" "}
       <div className="max-w-screen-sm w-full">
         {/* <Image src="/images/logo-for-light.webp" height={80} width={176} alt="" /> */}
         <h1
@@ -20,7 +31,6 @@ export default async function LoginPage() {
           <RegisterForm app_stage={process.env.APP_STAGE} />
         </div>
       </div>
-      <div className="hidden lg:block bg-bg-main-2/30 w-full"></div>
     </main>
   );
 }
