@@ -7,31 +7,31 @@ const contact_data = [
   {
     name: "Shakil Arifeen",
     title: "Advisor",
-    wa: "94717246175",
+    wa: "mailto:shakilarifeen@ieee.org",
     img: "shakil-arifeen",
   },
   {
     name: " Manul Thanura",
     title: "Advisor",
-    wa: "94714545569",
+    wa: "mailto:manulthanura@ieee.org",
     img: "manul_thanura",
   },
   {
     name: "Dhananjaya Yatigammana",
     title: "Co-chair",
-    wa: "94724250436",
+    wa: "https://api.whatsapp.com/send?phone=94724250436",
     img: "dhananjaya-yatigammana",
   },
   {
     name: "Maleesha Dinujaya",
     title: "Co-chair",
-    wa: "94767169833",
+    wa: "https://api.whatsapp.com/send?phone=94767169833",
     img: "maleesha-dinujaya",
   },
   {
     name: "Nipuni Herath",
     title: "Secretary",
-    wa: "94715496637",
+    wa: "mailto:nipwimarshana@gmail.com",
     img: "nipuni-herath",
   },
 ];
@@ -80,8 +80,10 @@ const Card = (props: {
         alt={`${props.name}`}
       />
       <Link
-        href={`https://api.whatsapp.com/send?phone=${props.wa}`}
-        title={`Contact ${props.name} on whatsapp.`}
+        href={props.wa}
+        title={`Contact ${props.name} on ${
+          props.wa.startsWith("mail") ? "email" : "whatsapp"
+        }.`}
         className="mt-1 text-lg flex items-center  focus:underline hover:underline px-2"
       >
         {props.name}

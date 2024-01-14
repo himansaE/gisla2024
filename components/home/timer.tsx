@@ -44,7 +44,7 @@ export const Timer = () => {
         <TimerNumber n={time.sec} title="Secs" className="xsm:flex hidden " />
       </div>
       <div
-        className={`${font_poppins_one.className}   text-white fon text-center `}
+        className={`${font_poppins_one.className} text-white fon text-center text-sm sm:text-base`}
       >
         {" "}
         Registration Open in{" "}

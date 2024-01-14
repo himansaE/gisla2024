@@ -2,6 +2,7 @@
   "editor.inlineSuggest.showToolbar": "always",
   "cSpell.words": [
     "Artsmart",
+    "authed",
     "authjs",
     "DALL",
     "fname",
@@ -12,7 +13,8 @@
     "Paytone",
     "signout",
     "sonner",
-    "Unauth"
+    "Unauth",
+    "unauthed"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",

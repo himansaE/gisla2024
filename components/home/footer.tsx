@@ -49,7 +49,7 @@ const in_links = [
   ["Home", "/#"],
   ["Tutorial", "/#tutorial"],
   ["Rules", "/#rules"],
-  ["Contact Us", "/#contact-us"],
+  ["Contact Us", "/#contact_us"],
 ];
 
 const pages_link = [

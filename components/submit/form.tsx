@@ -179,7 +179,7 @@ export const SubmitForm = (props: Props) => {
                 errorText={error}
               />
               <TextAreaBox
-                title="Prompt"
+                title="Prompt (Only Visible to you)"
                 name="prompt"
                 disabled={is_submitting}
                 placeholder="Give the prompt used generating artwork."
