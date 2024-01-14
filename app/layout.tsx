@@ -36,7 +36,13 @@ export default function RootLayout({
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
+        <meta property="og:title" content="IEEE GISLA 2024"></meta>
+        <meta
+          property="og:description"
+          content="The Global AI Art Competition"
+        />
         <meta property="og:image" content="/og-image.jpg" />
+        <meta property="og:url" content="/og-image.jpg" />
       </head>
       <body className={font_poppins_one.className}>
         <NavBar />
