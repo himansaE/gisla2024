@@ -3,31 +3,35 @@
 import { font_pasti, font_poppins_one } from "@/lib/font";
 import { useEffect, useState } from "react";
 
-const timeDiff = () => {
-  let diff = new Date(2024, 0, 14, 20, 0, 0).getTime() - new Date().getTime();
-  const now_unformatted = [
-    diff / 1000,
-    diff / 1000 / 60,
-    diff / 1000 / 60 / 60 - 6,
-    diff / 1000 / 60 / 60 / 24,
-  ].map((i) => Math.floor(i));
-  const format = [60, 60, 24, 1000];
-  const now = now_unformatted.map((i, n) =>
-    String(i % format[n]).padStart(2, "0")
-  );
-  let before = now_unformatted.map((i, n) =>
-    i + 1 <= 0 ? "01" : String((i + 1) % format[n]).padStart(2, "0")
-  );
-  return {
-    sec: [before[0], now[0]],
-    min: [before[1], now[1]],
-    hour: [before[2], now[2]],
-    day: [before[3], now[3]],
-  };
-};
-
 export const Timer = () => {
-  const [time, setTime] = useState(timeDiff());
+  const timeDiff = () => {
+    let diff = new Date(2024, 0, 14, 20, 0, 0).getTime() - new Date().getTime();
+    const now_unformatted = [
+      diff / 1000,
+      diff / 1000 / 60,
+      diff / 1000 / 60 / 60 - 6,
+      diff / 1000 / 60 / 60 / 24,
+    ].map((i) => Math.floor(i));
+    const format = [60, 60, 24, 1000];
+    const now = now_unformatted.map((i, n) =>
+      String(i % format[n]).padStart(2, "0")
+    );
+    let before = now_unformatted.map((i, n) =>
+      i + 1 <= 0 ? "01" : String((i + 1) % format[n]).padStart(2, "0")
+    );
+    return {
+      sec: [before[0], now[0]],
+      min: [before[1], now[1]],
+      hour: [before[2], now[2]],
+      day: [before[3], now[3]],
+    };
+  };
+  const [time, setTime] = useState<{
+    sec: string[];
+    min: string[];
+    hour: string[];
+    day: string[];
+  } | null>(null);
 
   useEffect(() => {
     timeDiff();
@@ -36,6 +40,7 @@ export const Timer = () => {
     return () => clearInterval(t);
   }, []);
 
+  if (time == null) return <></>;
   return (
     <div className="bg-bg-main rounded-xl pl-2 pb-2">
       <div className="flex tabular-nums text-white" style={font_pasti.style}>
