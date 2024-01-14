@@ -27,7 +27,7 @@ export const NavBarClient = (props: { user: Session | null }) => {
   return (
     <>
       <nav
-        className={` top-0 h-16 w-full flex flex-row py-2 items-center px-5 gap-12 z-[52] fixed ${
+        className={` top-0 h-16 w-full flex flex-row py-2 items-center px-5 gap-12 z-40 fixed ${
           side_nav
             ? "bg-white"
             : path === "/"
@@ -88,7 +88,14 @@ export const NavBarClient = (props: { user: Session | null }) => {
         </div>
         <div className="flex flex-col px-7 gap-2 ">
           {get_links(props.user, true).map((i) => (
-            <Link href={i[1]} key={i[0]} className="hover:underline w-fit">
+            <Link
+              href={i[1]}
+              key={i[0]}
+              className="hover:underline w-fit"
+              onClick={() => {
+                setSideNav(false);
+              }}
+            >
               {i[0]}
             </Link>
           ))}

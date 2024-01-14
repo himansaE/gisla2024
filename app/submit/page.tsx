@@ -19,7 +19,13 @@ export default async function Page() {
   ]);
 
   if (posts_count >= 3) {
-    return <></>;
+    return (
+      <div>
+        <div className="text-center my-10">
+          You already Submitted 3 Artworks
+        </div>
+      </div>
+    );
   }
 
   return (

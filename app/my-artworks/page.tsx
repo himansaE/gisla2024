@@ -1,12 +1,15 @@
 import { withAuthProtection } from "@/lib/auth/guards";
 import prisma from "@/lib/prisma";
+import Image from "next/image";
 import Link from "next/link";
 
 export default async function Page() {
   const user = await withAuthProtection();
+  if (user.user == undefined) return <></>;
+
   const posts = await prisma.post.findMany({
     where: {
-      user_id: user.user?.id,
+      user_id: user.user.id,
     },
   });
   const p = [];
@@ -31,9 +34,45 @@ export default async function Page() {
             </Link>
           </div>
         ) : (
-          <div>{}</div>
+          <div className="my-10 mb-5">
+            {posts.map((i) => (
+              <Artwork key={i.id} post={i}></Artwork>
+            ))}
+          </div>
         )}
       </div>
     </div>
   );
 }
+
+const Artwork = (props: {
+  post: {
+    id: string;
+    user_id: string;
+    image_link: string;
+    prompt: string;
+    title: string;
+    des: string;
+    created_using: string;
+    created_on: Date;
+    state: string;
+    fb_link: string | null;
+    voted: boolean;
+    marks: number | null;
+  };
+}) => {
+  return (
+    <div>
+      <div>
+        <Image
+          src={props.post.image_link}
+          alt={props.post.title}
+          height={300}
+          width={300}
+          objectFit="contain"
+          className="object-contain"
+        />
+      </div>
+    </div>
+  );
+};

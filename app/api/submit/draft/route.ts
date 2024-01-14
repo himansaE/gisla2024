@@ -72,7 +72,7 @@ export async function POST(req: Request) {
 
   // #region get metadata
   let metadata: sharp.Metadata;
-  const overlay_metadata = { height: 199, width: 420 };
+  const overlay_metadata = { height: 199, width: 380 };
 
   try {
     metadata = await sharp(buffer).metadata();
@@ -85,10 +85,10 @@ export async function POST(req: Request) {
   }
 
   const targetWidth = Math.floor(
-    metadata.width ? metadata.width * 0.2 : overlay_metadata.width
+    metadata.width ? metadata.width * 0.3 : overlay_metadata.width
   );
   const targetHeight = Math.floor(
-    metadata.height ? metadata.height * 0.2 : overlay_metadata.height
+    metadata.height ? metadata.height * 0.3 : overlay_metadata.height
   );
 
   const overlayAspectRatio = overlay_metadata.width / overlay_metadata.height;
@@ -106,7 +106,9 @@ export async function POST(req: Request) {
   // #endregion
 
   // #region adding watermark
-  const watermark = await readFile(path.resolve("public/images/watermark.png"));
+  const watermark = await readFile(
+    path.resolve("public/images/GISLA FOR WATERMARK.png")
+  );
   let final_buffer: Buffer;
   try {
     final_buffer = await sharp(buffer)

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export const Timer = () => {
   const timeDiff = () => {
-    let diff = new Date(2024, 0, 14, 20, 0, 0).getTime() - new Date().getTime();
+    let diff = new Date(2024, 0, 31, 24, 0, 0).getTime() - new Date().getTime();
     const now_unformatted = [
       diff / 1000,
       diff / 1000 / 60,
