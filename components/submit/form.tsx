@@ -154,11 +154,16 @@ export const SubmitForm = (props: Props) => {
                       setSubmitting(false);
                     }
                   })
-                  .catch(() => {
-                    setError("Something went wrong Try again.");
+                  .catch((e) => {
+                    console.log(e);
+                    setError(
+                      "Sorry, a network error occurred. Please check your internet connection and try again."
+                    );
                     setErrorIn("all");
                     setSubmitting(false);
-                    toast.error("Something went wrong. Try again.");
+                    toast.error(
+                      "Sorry, a network error occurred. Please check your internet connection and try again."
+                    );
                   });
               }}
             >
