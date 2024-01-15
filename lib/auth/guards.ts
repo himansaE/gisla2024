@@ -10,5 +10,5 @@ export async function withAuthProtection(redirect_path?: string) {
 
 export async function blockAuth(redirect_path?: string) {
   const user = await auth();
-  if (user?.user) redirect(redirect_path ?? "/#contact_us");
+  if (user?.user) redirect(redirect_path ?? "/");
 }

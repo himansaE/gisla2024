@@ -19,7 +19,7 @@ export const IntroButton = async () => {
       <div
         className={`py-7 px-12 rounded-2xl  bg-white  hover:bg-gradient-to-b from-transparent to-green-100 transition-colors  text-bg-main-2 font-semibold md:text-xl ${font_poppins_one.className}`}
       >
-        {user?.user ? "Submit your Image" : "Registration Now"}
+        {user?.user ? "Submit your Image" : "Register Now"}
       </div>
     </Link>
   );

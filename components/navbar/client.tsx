@@ -7,8 +7,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export const NavBarClient = (props: { user: Session | null }) => {
-  const [path, setPath] = useState("/");
+export const NavBarClient = (props: { user: Session | null; url: string }) => {
+  const [path, setPath] = useState(props.url);
   const [side_nav, setSideNav] = useState(false);
   const pathname = usePathname();
 
@@ -27,7 +27,7 @@ export const NavBarClient = (props: { user: Session | null }) => {
   return (
     <>
       <nav
-        className={` top-0 h-16 w-full flex flex-row py-2 items-center px-5 gap-12 z-40 fixed ${
+        className={` top-0 h-16 w-full flex flex-row py-2 items-center px-5 gap-12 z-40 sticky  ${
           side_nav
             ? "bg-white"
             : path === "/"
@@ -114,7 +114,6 @@ export const NavBarClient = (props: { user: Session | null }) => {
           </div>
         </div>
       </div>
-      <div className={`h-16 w-full ${path == "/" ? "hidden" : ""}`}></div>
     </>
   );
 };

@@ -66,14 +66,20 @@ export const RulesText = (props: { hide_heading?: boolean }) => {
               </li>
               <li>
                 The submission file should be in PNG, PDF, JPG, or JPEG format
-                with a minimum resolution of 1280 x 1280 pixels and include a
-                project file with layers.
+                with a minimum resolution of 1280 x 1280 pixels.
+              </li>
+              <li>
+                You must upload the raw image file without any changes or
+                modifications.
               </li>
               <li>
                 Submissions should be made through the official competition
                 website.
               </li>
-              <li>You will be informed via email if your art is selected.</li>
+              <li>
+                Submissions should be made through the official competition
+                website. You will be informed via email if your art is selected.
+              </li>
             </ul>
           </div>
 

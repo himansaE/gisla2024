@@ -69,8 +69,7 @@ const Artwork = (props: {
           alt={props.post.title}
           height={300}
           width={300}
-          objectFit="contain"
-          className="object-contain"
+          className="object-contain rounded-lg"
         />
       </div>
     </div>

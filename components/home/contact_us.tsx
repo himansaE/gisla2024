@@ -5,18 +5,6 @@ import { BoxBg } from "./tutorial-page";
 
 const contact_data = [
   {
-    name: "Shakil Arifeen",
-    title: "Advisor",
-    wa: "mailto:shakilarifeen@ieee.org",
-    img: "shakil-arifeen",
-  },
-  {
-    name: " Manul Thanura",
-    title: "Advisor",
-    wa: "mailto:manulthanura@ieee.org",
-    img: "manul_thanura",
-  },
-  {
     name: "Dhananjaya Yatigammana",
     title: "Co-chair",
     wa: "https://api.whatsapp.com/send?phone=94724250436",

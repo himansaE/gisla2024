@@ -68,7 +68,7 @@ export const ConformUploadDialog = (props: {
             variant="secondary"
             onClick={() => close(FilePickerState.EMPTY)}
           >
-            Close
+            Change Image
           </Button>
           <Button onClick={() => close(FilePickerState.UPLOADING)}>
             Upload
