@@ -65,12 +65,15 @@ export const NavBarClient = (props: { user: Session | null; url: string }) => {
         >
           {props.user != null ? "Submit Artwork" : "Apply Now"}
         </Link>
-        <div
-          className="ml-auto md:-ml-4 cursor-pointer bg-bg-main-2/20 hover:bg-bg-main-2/30 transition-colors p-2 rounded-lg block md:hidden"
+        <button
+          className="ml-auto md:-ml-4 cursor-pointer bg-bg-main-2/20 hover:bg-bg-main-2/30 transition-colors p-2 rounded-lg block md:hidden
+          focus:outline-bg-main-2/40
+          "
           onClick={() => setSideNav((i) => !i)}
+          title="Side navigation"
         >
           <Menu />
-        </div>
+        </button>
       </nav>
       <div
         className={`fixed h-screen w-screen z-30 top-0 left-0 bg-white backdrop-blur-lg md:hidden ${

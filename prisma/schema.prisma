@@ -25,7 +25,7 @@ model User {
   Account       Account[]
   otp           otp[]
   Key           Key?
-  Post          Post?
+  Post          Post[]
   Draft         Draft[]
 }
 
@@ -86,7 +86,7 @@ model otp {
 
 model Post {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  user_id       String   @unique @db.ObjectId
+  user_id       String   @db.ObjectId
   image_link    String
   prompt        String
   title         String

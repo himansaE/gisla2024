@@ -1,5 +1,6 @@
 "use client";
 
+import { copyText, sharePost } from "@/lib/client/actions";
 import { font_poppins_one } from "@/lib/font";
 import { Copy, DownloadIcon, Edit2Icon, Share2 } from "lucide-react";
 import { User } from "next-auth";
@@ -270,23 +271,8 @@ export const SubmitForm = (props: Props) => {
                 subAction={
                   <button
                     className="cursor-pointer hover:underline px-1 flex items-center pr-2"
-                    onClick={async (e) => {
-                      const copy_link_ref = document.getElementById(
-                        "copy_link"
-                      ) as HTMLInputElement;
-                      if (copy_link_ref) {
-                        if (navigator.clipboard) {
-                          await navigator.clipboard.writeText(
-                            String(post_link)
-                          );
-                          toast.success("Link coped successfully.");
-                        } else {
-                          copy_link_ref.select();
-                          const copy = document?.execCommand("copy");
-                          if (copy) toast.success("Link coped successfully.");
-                          else toast.warning("Link copy unsuccessful.");
-                        }
-                      }
+                    onClick={async () => {
+                      copyText(post_link);
                     }}
                   >
                     <Copy className="h-3" /> Copy Link
@@ -296,7 +282,7 @@ export const SubmitForm = (props: Props) => {
               <div className="flex flex-col gap-2">
                 <Button onClick={() => setShareSheet(true)}>Share</Button>
                 <Link
-                  href={`https://gisla2024.vercel.app/artwork/${props.draft_id}`}
+                  href={post_link}
                   className="text-sm flex justify-center py-2 bg-bg-main-2/10 rounded-md   hover:bg-bg-main-2/20 transition-colors"
                 >
                   View Artwork
@@ -376,49 +362,7 @@ const ShareSheet = (props: {
         <div className="flex flex-wrap px-3 xsm:px-6 py-10 gap-x-6 gap-y-6 justify-center">
           <ShareItem
             onClick={async () => {
-              if (!navigator.share) {
-                toast.warning(
-                  "Share Feature not available in our browser. Try update your browser or Use another sharing method."
-                );
-                return;
-              }
-              if (!props.url) {
-                toast.warning("Something went wrong. Try refresh.");
-                return;
-              }
-              const data: ShareData = {
-                title: "Share file",
-              };
-
-              let res: Blob;
-              try {
-                res = await fetch(props.url, { mode: "no-cors" }).then((i) =>
-                  i.blob()
-                );
-              } catch (e) {
-                toast.warning("Can't load the Artwork. Try again.");
-                return;
-              }
-              data.files = [
-                new File([res], props.url.split("/").pop() ?? "file.jpg", {
-                  type: "image/jpeg",
-                }),
-              ];
-              console.log(data);
-              const can = navigator.canShare(data);
-              if (!can) {
-                toast.warning(
-                  "Share Feature not available in our browser. Try update your browser or Use another sharing method."
-                );
-                return;
-              }
-              try {
-                await navigator.share(data);
-              } catch {
-                toast.error(
-                  "Share Feature not available in our browser. Try update your browser or Use another sharing method."
-                );
-              }
+              await sharePost(props.url);
             }}
             text="Share"
           >

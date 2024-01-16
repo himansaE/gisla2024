@@ -1,7 +1,9 @@
+import { Card, CardContent } from "@/components/ui/card";
 import { withAuthProtection } from "@/lib/auth/guards";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
+import { ArtworkContextMenu } from "./context-menu";
 
 export default async function Page() {
   const user = await withAuthProtection();
@@ -34,7 +36,7 @@ export default async function Page() {
             </Link>
           </div>
         ) : (
-          <div className="my-10 mb-5">
+          <div className="my-10 mb-5 grid justify-items-center gap-y-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:max-w-3xl lg:max-w-6xl">
             {posts.map((i) => (
               <Artwork key={i.id} post={i}></Artwork>
             ))}
@@ -62,16 +64,33 @@ const Artwork = (props: {
   };
 }) => {
   return (
-    <div>
-      <div>
+    <Card className="">
+      <CardContent className="flex flex-col gap-3 max-w-xs items-center px-3  py-3">
         <Image
           src={props.post.image_link}
           alt={props.post.title}
           height={300}
           width={300}
-          className="object-contain rounded-lg"
+          className="object-contain rounded-lg  w-80 max-h-[20rem] max-w-full bg-bg-main-2/10"
         />
-      </div>
-    </div>
+
+        <div className="w-full flex px-1 ">
+          <div className="w-full">
+            <Link
+              href={`https://gisla2024.vercel.app/artwork/${props.post.id}`}
+              className="overflow-hidden text-base h-6 text-ellipsis line-clamp-1"
+            >
+              {props.post.title}
+            </Link>
+            <div className="text-xs max-w-[20ch]  truncate overflow-hidden h-4 text-ellipsis line-clamp-1">
+              Microsoft Bing
+            </div>
+          </div>
+          <div className="flex justify-center">
+            <ArtworkContextMenu {...props.post} />
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
