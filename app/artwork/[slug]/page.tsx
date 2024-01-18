@@ -18,7 +18,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
   });
   if (!post) return notFound();
   return (
-    <div className={`${font_poppins_one.className} lg:grid grid-cols-2 gap-4`}>
+    <div
+      className={`${font_poppins_one.className} lg:grid grid-cols-2 gap-4 mb-6`}
+    >
       <div className="px-4 lg:px-4 py-4 flex min-h-min lg:[min-height:calc(100vh_-_6.25rem)] lg:max-h-[calc(max(500px,100vh))] justify-center items-center">
         <div className="flex h-full flex-col my-5 lg:my-0 items-center justify-center">
           <Image

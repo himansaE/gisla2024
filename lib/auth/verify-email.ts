@@ -25,7 +25,7 @@ export const SendEmailVerifyEmail = async (id: string, email: string) => {
   url.searchParams.append("for", "verify_email");
   url.searchParams.append("token", otp);
   await sendMail(
-    "himansa.24067@gmail.com",
+    email,
     "GISLA 2024 Account Verification.",
     MailVerifyComponent(url.href, email)
   );
