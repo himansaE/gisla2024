@@ -10,8 +10,8 @@ export type ResponseError = {
 
 export type ResponseOutput = ResponseDone | ResponseError;
 
-export const ResponseDone = (data: ResponseDone["data"]): ResponseDone => {
-  return { done: true, data };
+export const ResponseDone = (data?: ResponseDone["data"]): ResponseDone => {
+  return { done: true, data: data ?? {} };
 };
 
 export const ResponseError = (
@@ -25,4 +25,21 @@ export const NewResponse = (res: ResponseOutput | null, status?: number) => {
   return new Response(res == null ? null : JSON.stringify(res), {
     status: status,
   });
+};
+
+export const getJsonBody = async (req: Request): Promise<[boolean, any]> => {
+  let body;
+  try {
+    body = await req.json();
+  } catch (e) {}
+
+  if (!body)
+    return [
+      true,
+      ResponseError(
+        "Something went wrong. Please try again later or contact support if the issue persists."
+      ),
+    ];
+
+  return [false, body];
 };

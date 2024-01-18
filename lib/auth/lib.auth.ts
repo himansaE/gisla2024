@@ -1,8 +1,8 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { hashSync, compareSync, genSaltSync } from "bcrypt";
+import { compareSync, genSaltSync, hashSync } from "bcrypt";
 
-import prisma from "../prisma";
 import { randomUUID } from "crypto";
+import prisma from "../prisma";
 
 export function generateHashedPassword(password: string) {
   const saltRounds = 14;
@@ -37,4 +37,12 @@ export function generateSessionToken(): string {
 }
 export const fromDate = (time: number, date = Date.now()) => {
   return new Date(date + time * 1000);
+};
+
+export const generateRandomToken = (rounds: number = 5) => {
+  let t = "";
+  for (let i = 0; i < rounds; i++) {
+    t += Math.random().toString(36).substr(2);
+  }
+  return t;
 };

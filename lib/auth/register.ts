@@ -1,6 +1,7 @@
 import prisma from "../prisma";
 import { generateHashedPassword } from "./lib.auth";
 import { authError, AuthResponse } from "./utils";
+import { SendEmailVerifyEmail } from "./verify-email";
 
 export async function registerWithPassword(
   fname: string,
@@ -51,6 +52,7 @@ export async function registerWithPassword(
       },
     });
     if (user.id) {
+      await SendEmailVerifyEmail(user.id, user.email);
       return {
         done: true,
         user,

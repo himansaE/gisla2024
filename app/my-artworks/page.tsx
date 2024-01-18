@@ -14,7 +14,7 @@ export default async function Page() {
       user_id: user.user.id,
     },
   });
-  const p = [];
+
   return (
     <div className="px-3 py-7">
       <h1 className="text-3xl font-semibold">Your submitted Artworks.</h1>
