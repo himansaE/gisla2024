@@ -3,7 +3,12 @@ import { Center } from "@/components/ui/center";
 import { withAuthProtection } from "@/lib/auth/guards";
 import { font_poppins_one } from "@/lib/font";
 import prisma from "@/lib/prisma";
+import { Metadata } from "next";
 import type { Session, User } from "next-auth";
+
+export const metadata: Metadata = {
+  title: "Submit Artwork | GISLA 2024",
+};
 
 export default async function Page() {
   const session = (await withAuthProtection()) as Session;

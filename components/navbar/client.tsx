@@ -133,5 +133,8 @@ const get_links = (auth: Session | null, side?: boolean) => {
 };
 
 const authed_links = [["View Submitted", "/my-artworks"]];
-const default_links = [["Contact Us", "/#contact_us", "Rules", "/#rules"]];
+const default_links = [
+  ["Art Gallery", "/artworks"],
+  ["Contact Us", "/#contact_us", "Rules", "/#rules"],
+];
 const unauthed_links = [["Login", "/auth/login"]];

@@ -1,9 +1,14 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { withAuthProtection } from "@/lib/auth/guards";
 import prisma from "@/lib/prisma";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArtworkContextMenu } from "./context-menu";
+
+export const metadata: Metadata = {
+  title: "My Artworks | GISLA 2024",
+};
 
 export default async function Page() {
   const user = await withAuthProtection();

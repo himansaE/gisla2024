@@ -1,22 +1,13 @@
 import { Center } from "@/components/ui/center";
 import { font_poppins_one } from "@/lib/font";
 import prisma from "@/lib/prisma";
+import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  if (!/^[0-9a-f]{24}$/i.test(params.slug)) {
-    return notFound();
-  }
-  const post = await prisma.post.findFirst({
-    where: {
-      id: params.slug,
-    },
-    include: {
-      user: {},
-    },
-  });
-  if (!post) return notFound();
+  const post = await getArtwork(params.slug);
   return (
     <div
       className={`${font_poppins_one.className} lg:grid grid-cols-2 gap-4 mb-6`}
@@ -57,3 +48,37 @@ export default async function Page({ params }: { params: { slug: string } }) {
     </div>
   );
 }
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const data = await getArtwork(params.slug);
+
+  return {
+    title: `${data.title} by ${data.user.name} | GISLA 2024`,
+    description: data.des,
+    openGraph: {
+      title: `${data.title} by ${data.user.name}| GISLA 2024`,
+      description: data.des,
+      images: [data.image_link],
+    },
+  };
+}
+
+const getArtwork = cache(async (id: string) => {
+  if (!/^[0-9a-f]{24}$/i.test(id)) {
+    return notFound();
+  }
+  const post = await prisma.post.findFirst({
+    where: {
+      id,
+    },
+    include: {
+      user: {},
+    },
+  });
+  if (!post) return notFound();
+  return post;
+});

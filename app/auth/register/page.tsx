@@ -1,6 +1,11 @@
 import { blockAuth } from "@/lib/auth/guards";
 import { font_lato, font_poppins_one } from "@/lib/font";
+import { Metadata } from "next";
 import { RegisterForm } from "./form";
+
+export const metadata: Metadata = {
+  title: "Register to GISLA 2024",
+};
 
 export default async function LoginPage() {
   await blockAuth();
@@ -10,7 +15,7 @@ export default async function LoginPage() {
     >
       <div className="hidden lg:block bg-bg-main-2 w-full">
         <div
-          className={`${font_poppins_one.className}  hidden lg:flex bg-bg-main-2 w-full h-screen sticky top-0 flex-col justify-center text-white font-bold px-[2vw] `}
+          className={`${font_poppins_one.className}  hidden lg:flex bg-bg-main-2 w-full h-[calc(100vh_-_4em)] flex-col justify-center text-white font-bold px-[2vw] sticky top-16`}
         >
           <h1 className="text-5xl mt-auto">Welcome creators</h1>
           <p className="font-normal text-sm mb-20 text-white/80">
