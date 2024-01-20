@@ -38,6 +38,7 @@ PaginationItem.displayName = "PaginationItem";
 type PaginationLinkProps = {
   isActive?: boolean;
   href: string;
+  ref?: React.Ref<HTMLAnchorElement> | undefined;
 } & Pick<ButtonProps, "size"> &
   React.ComponentProps<"a">;
 
@@ -46,6 +47,7 @@ const PaginationLink = ({
   isActive,
   href,
   size = "icon",
+  ref,
   ...props
 }: PaginationLinkProps) => (
   <Link
