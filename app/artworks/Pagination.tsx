@@ -7,19 +7,18 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { RedirectType, redirect } from "next/navigation";
-
-export const POST_PER_PAGE = 9;
-const PAGES_IN_PAGINATION = 5;
+import { PAGES_IN_PAGINATION, POST_PER_PAGE } from "./cons";
 
 export const ArtworkPagination = ({
   page,
-
   pages,
   total_pages,
+  setData,
 }: {
   page: number;
   pages: number[];
   total_pages: number;
+  setData: (index: number) => Promise<void>;
 }) => {
   if (pages.length === 0)
     redirect(`/artworks?page=${total_pages}`, RedirectType.replace);
@@ -31,6 +30,8 @@ export const ArtworkPagination = ({
             <PaginationPrevious
               href={`/artworks?page=${page - 1}`}
               className="cursor-pointer select-none"
+              index={page - 1}
+              setData={setData}
             />
           </PaginationItem>
         )}
@@ -40,6 +41,8 @@ export const ArtworkPagination = ({
               href={`/artworks?page=${i}`}
               className="cursor-pointer select-none"
               isActive={i == page}
+              setData={setData}
+              index={i}
             >
               {i}
             </PaginationLink>
@@ -50,6 +53,8 @@ export const ArtworkPagination = ({
             <PaginationNext
               href={`/artworks?page=${page + 1}`}
               className="cursor-pointer select-none"
+              setData={setData}
+              index={page + 1}
             />
           </PaginationItem>
         )}

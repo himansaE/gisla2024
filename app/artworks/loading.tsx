@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { POST_PER_PAGE } from "./Pagination";
+import { POST_PER_PAGE } from "./cons";
 
 export default function Loading() {
   return (

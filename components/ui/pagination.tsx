@@ -38,7 +38,9 @@ PaginationItem.displayName = "PaginationItem";
 type PaginationLinkProps = {
   isActive?: boolean;
   href: string;
+  index: number;
   ref?: React.Ref<HTMLAnchorElement> | undefined;
+  setData: (index: number) => Promise<void>;
 } & Pick<ButtonProps, "size"> &
   React.ComponentProps<"a">;
 
@@ -48,10 +50,16 @@ const PaginationLink = ({
   href,
   size = "icon",
   ref,
+  index,
+  setData,
   ...props
 }: PaginationLinkProps) => (
   <Link
     href={href ?? ""}
+    onClick={async (e) => {
+      e.preventDefault();
+      await setData(index);
+    }}
     aria-current={isActive ? "page" : undefined}
     className={cn(
       buttonVariants({
