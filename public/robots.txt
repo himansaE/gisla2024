@@ -1,0 +1,7 @@
+
+User-agent: *
+Allow: /
+Disallow: /my-artworks  
+
+Sitemap: https://gisla2024.vercel.app/sitemap.xml
+Sitemap: https://gisla2024.vercel.app/artwork/sitemap.xml
