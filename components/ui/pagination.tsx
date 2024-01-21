@@ -55,15 +55,17 @@ const PaginationLink = ({
   ...props
 }: PaginationLinkProps) => (
   <Link
+    prefetch={false}
     href={href ?? ""}
     onClick={async (e) => {
       e.preventDefault();
-      await setData(index);
+
+      if (!isActive) await setData(index);
     }}
     aria-current={isActive ? "page" : undefined}
     className={cn(
       buttonVariants({
-        variant: isActive ? "outline" : "ghost",
+        variant: isActive ? "active" : "ghost",
         size,
       }),
       className
