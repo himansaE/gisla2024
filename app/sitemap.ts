@@ -11,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
     },
     {
-      url: `${BASE_URL}/artworks`,
+      url: `${BASE_URL}artworks`,
       lastModified:
         (
           await prisma.post.aggregate({

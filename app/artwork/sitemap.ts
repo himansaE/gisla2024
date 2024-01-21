@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
 import { MetadataRoute } from "next";
 
+const dynamic = "force-dynamic";
+
 const BASE_URL = "https://gisla2024.vercel.app/artwork/";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
