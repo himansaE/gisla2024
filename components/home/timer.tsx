@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export const Timer = () => {
   const timeDiff = () => {
-    let diff = new Date(2024, 0, 31, 24, 0, 0).getTime() - new Date().getTime();
+    let diff = new Date(2024, 1, 4, 24, 0, 0).getTime() - new Date().getTime();
     const now_unformatted = [
       diff / 1000,
       diff / 1000 / 60,
@@ -49,7 +49,7 @@ export const Timer = () => {
         <TimerNumber
           n={time?.sec ?? ["00", "00"]}
           title="Secs"
-          className="xsm:flex hidden "
+          className="xsm:flex hidden"
         />
       </div>
       <div
@@ -58,7 +58,7 @@ export const Timer = () => {
         {" "}
         Competition ends on{" "}
         <span className="text-[#adffb8] font-semibold">
-          31<sup>st</sup> Jan 2024
+          04<sup>th</sup> Feb 2024
         </span>
       </div>
     </div>
