@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArtworkPagination } from "./Pagination";
 
+import { ClientCache } from "@/lib/client/cache";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Loading from "./loading";
@@ -34,6 +35,7 @@ export type ArtworkPageData = {
   })[];
 };
 
+const cache = new ClientCache(60 * 5);
 export const ArtworkClient = (props: { data: ArtworkPageData }) => {
   const [data, setData] = useState(props.data);
   const [loading, setLoading] = useState(false);
@@ -46,7 +48,7 @@ export const ArtworkClient = (props: { data: ArtworkPageData }) => {
     window.history.pushState({ page: index }, "", url);
     let posts;
     try {
-      posts = await getPosts(String(index));
+      posts = await cache.fetch(String(index), getPosts, [String(index)]);
     } catch (e) {
       return;
     }
@@ -65,7 +67,13 @@ export const ArtworkClient = (props: { data: ArtworkPageData }) => {
         <>
           <div className="flex flex-wrap justify-center gap-4  md:gap-10 py-9 px-2">
             {data.post.map((i) => (
-              <Post {...i} key={i.id} />
+              <Post
+                id={i.id}
+                image_link={i.image_link}
+                title={i.title}
+                name={`${i.user.name} ${i.user.lastName}`}
+                key={i.id}
+              />
             ))}
           </div>
         </>
@@ -80,30 +88,15 @@ export const ArtworkClient = (props: { data: ArtworkPageData }) => {
   );
 };
 
-const Post = (
-  post: {
-    id: string;
-    user_id: string;
-    image_link: string;
-    prompt: string;
-    title: string;
-    des: string;
-    created_using: string;
-    created_on: Date;
-    state: string;
-    fb_link: string | null;
-    voted: boolean;
-    marks: number | null;
-  } & {
-    user: {
-      name: string;
-      lastName: string | null;
-    };
-  }
-) => (
+export const Post = (post: {
+  id: string;
+  image_link: string;
+  title: string;
+  name: string;
+}) => (
   <Link
     href={`/artwork/${post.id}`}
-    className="group border border-gray-300 p-2 rounded-lg max-w-full"
+    className="group border border-gray-300 p-2 rounded-lg max-w-full w-fit"
   >
     <div className="flex w-72 items-center justify-center max-w-full rounded-md overflow-hidden bg-bg-main-2/10 supports-[not(aspect-ratio:1/1)]:h-72 aspect-square">
       <Image
@@ -121,7 +114,7 @@ const Post = (
       </div>
       <div className="flex justify-center items-center gap-1 text-gray-900 bg-slate-200 rounded-lg w-fit max-w-full text-xs pr-3 pl-2 py-0.5 overflow-hidden truncate min-w-0">
         <AtSign size={"1em"} />
-        {post.user.name} {post.user.lastName}
+        {post.name}
       </div>
     </div>
   </Link>

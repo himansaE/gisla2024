@@ -13,9 +13,7 @@ export default async function Page({
   const data = await getPosts(searchParams.page);
   return (
     <>
-      <form>
         <ArtworkClient data={{ ...data }} />
-      </form>
     </>
   );
 }

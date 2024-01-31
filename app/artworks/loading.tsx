@@ -6,14 +6,14 @@ export default function Loading() {
     <>
       <div className="flex flex-wrap justify-center gap-4  md:gap-10 py-9 px-2">
         {Array.from({ length: POST_PER_PAGE }).map((_, i) => (
-          <Card key={i} />
+          <CardLoading key={i} />
         ))}
       </div>
     </>
   );
 }
 
-export const Card = () => (
+export const CardLoading = () => (
   <div className="border border-gray-300/30 p-2 rounded-lg max-w-full">
     <Skeleton className="flex w-72 items-center justify-center max-w-full rounded-md overflow-hidden supports-[not(aspect-ratio:1/1)]:h-72 aspect-square" />
     <div className="flex flex-col my-2 px-1 gap-1">
