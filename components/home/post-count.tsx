@@ -9,7 +9,7 @@ export const PostCount = () => {
         className="flex tabular-nums text-white  pt-2 sm:pt-4 justify-center items-center "
         style={font_pasti.style}
       >
-        {String("157")
+        {String("160")
           .padStart(4, "0")
           .split("")
           .map((i, n) => (
