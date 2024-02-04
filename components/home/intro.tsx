@@ -3,7 +3,7 @@ import { font_poppins_one } from "@/lib/font";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { IntroCanvas } from "./intro-canvas";
-import { Timer } from "./timer";
+import { PostCount } from "./post-count";
 
 export const IntroComponent = () => {
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -50,7 +50,7 @@ export const IntroComponent = () => {
             Creativity
           </div>
         </h1>
-        <Timer />
+        <PostCount />
       </div>
       <div
         className="flex flex-col gap-1 items-center pb-24 mix-blend-exclusion"
