@@ -15,7 +15,7 @@ export const PostCount = () => {
           .map((i, n) => (
             <span
               key={n}
-              className="bg-bg-main-2 px-2 py-3 rounded-lg my-3 mr-3 w-[2ch] flex justify-center leading-none text-5xl sm:text-8xl h-[6.4rem]"
+              className="bg-bg-main-2 px-2 py-3 rounded-lg my-3 mr-3 w-[2ch] flex justify-center leading-none text-5xl sm:text-8xl h-[3.8rem] sm:h-[6.4rem]"
             >
               {i}
             </span>
