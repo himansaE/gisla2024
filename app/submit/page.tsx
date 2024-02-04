@@ -48,7 +48,7 @@ export default async function Page() {
   );
 }
 
-export async function SubmissionClose() {
+async function SubmissionClose() {
   return (
     <section
       className={`${font_poppins_one.className} min-h-screen bg-bg-main-2/5 py-8`}
