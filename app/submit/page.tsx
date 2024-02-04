@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Submit Artwork | GISLA 2024",
 };
 
-export async function Page() {
+export default async function Page() {
   const session = (await withAuthProtection()) as Session;
   const user = session.user as User;
 
@@ -48,7 +48,7 @@ export async function Page() {
   );
 }
 
-export default async function SubmissionClose() {
+export async function SubmissionClose() {
   return (
     <section
       className={`${font_poppins_one.className} min-h-screen bg-bg-main-2/5 py-8`}
