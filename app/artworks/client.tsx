@@ -31,7 +31,6 @@ export type ArtworkPageData = {
     state: string;
     fb_link: string | null;
     voted: boolean;
-    marks: number | null;
   })[];
 };
 

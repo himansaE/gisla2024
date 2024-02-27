@@ -65,7 +65,6 @@ const Artwork = (props: {
     state: string;
     fb_link: string | null;
     voted: boolean;
-    marks: number | null;
   };
 }) => {
   return (

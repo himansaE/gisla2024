@@ -16,6 +16,12 @@ export async function POST(req: Request) {
       )
     );
 
+    return  NewAuthResponse(
+      authError(
+        "Registration is closed."
+      )
+    );
+
   //TODO:: implement security
 
   const res = await registerWithPassword(

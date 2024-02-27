@@ -44,7 +44,6 @@ export const ArtworkContextMenu = (post: {
   state: string;
   fb_link: string | null;
   voted: boolean;
-  marks: number | null;
 }) => {
   const router = useRouter();
   const link = `https://gisla2024.vercel.app/artwork/${post.id}`;

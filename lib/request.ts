@@ -28,18 +28,14 @@ export const NewResponse = (res: ResponseOutput | null, status?: number) => {
 };
 
 export const getJsonBody = async (req: Request): Promise<[boolean, any]> => {
-  let body;
   try {
-    body = await req.json();
-  } catch (e) {}
-
-  if (!body)
+    return [false, await req.json()];
+  } catch (e) {
     return [
       true,
       ResponseError(
         "Something went wrong. Please try again later or contact support if the issue persists."
       ),
     ];
-
-  return [false, body];
+  }
 };

@@ -27,6 +27,8 @@ model User {
   Key           Key?
   Post          Post[]
   Draft         Draft[]
+  Marks         Marks[]
+  Judging       Judging[]
 }
 
 model Session {
@@ -96,8 +98,9 @@ model Post {
   state         String   @default("1")
   fb_link       String?
   voted         Boolean  @default(false)
-  marks         Int?
   user          User     @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  Marks         Marks?
+  Judging       Judging?
 }
 
 model Draft {
@@ -105,4 +108,34 @@ model Draft {
   url     String
   user_id String @unique @db.ObjectId
   user    User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+}
+
+model Marks {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  judge_id String @db.ObjectId
+  post_id  String @unique @db.ObjectId
+
+  relevance     Int
+  creativity    Int
+  artistic      Int
+  clarity       Int
+  impact        Int
+  technical     Int
+  diversity     Int
+  accessibility Int
+  content       Int
+  completeness  Int
+
+  user User @relation(references: [id], fields: [judge_id])
+  post Post @relation(references: [id], fields: [post_id])
+}
+
+model Judging {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  post_id  String   @unique @db.ObjectId
+  judge_id String   @unique @db.ObjectId
+  timeout  DateTime
+  token    String
+  post     Post     @relation(references: [id], fields: [post_id])
+  user     User     @relation(references: [id], fields: [judge_id])
 }
