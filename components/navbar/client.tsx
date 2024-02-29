@@ -60,13 +60,25 @@ export const NavBarClient = (props: { user: Session | null; url: string }) => {
           ))}
         </div>
         <Link
-          className="hidden items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2 ml-auto "
-          href={props.user != null ? "/submit" : "/auth/register"}
+          className="flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2 ml-auto "
+          href={
+            props.user != null
+              ? (props.user.user as any).role === "judge" ||
+                (props.user.user as any).role === "admin"
+                ? "/judge"
+                : "/submit"
+              : "/auth/register"
+          }
         >
-          {props.user != null ? "Submit Artwork" : "Apply Now"}
+          {props.user?.user != null
+            ? (props.user.user as any).role === "judge" ||
+              (props.user.user as any).role === "admin"
+              ? "Judge Artworks"
+              : "View Artworks"
+            : "View Artworks"}
         </Link>
         <button
-          className="ml-auto md:-ml-4 cursor-pointer bg-bg-main-2/20 hover:bg-bg-main-2/30 transition-colors p-2 rounded-lg block md:hidden
+          className="-ml-6 cursor-pointer bg-bg-main-2/20 hover:bg-bg-main-2/30 transition-colors p-2 rounded-lg block md:hidden
           focus:outline-bg-main-2/40
           "
           onClick={() => setSideNav((i) => !i)}

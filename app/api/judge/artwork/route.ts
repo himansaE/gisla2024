@@ -26,7 +26,7 @@ type ReqBody = {
 };
 
 export async function POST(req: Request) {
-  const user = await withAPIAuthProtection("judge");
+  const user = await withAPIAuthProtection(["judge"]);
   if (user == false) return NewResponse(ResponseError("unauthorized", 401));
   if (!user.user) return NewResponse(ResponseError("unauthorized", 401));
 

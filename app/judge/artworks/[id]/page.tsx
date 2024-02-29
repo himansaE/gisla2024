@@ -5,29 +5,34 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { JudgeForm } from "./client";
 export default async function Page({ params }: { params: { id: string } }) {
-  const user = await withRoleAuthProtection("judge");
+  const user = await withRoleAuthProtection(["judge"]);
 
   const { id } = params;
 
   if (!/^[0-9a-f]{24}$/i.test(id)) {
     return notFound();
   }
-  const [judge, post] = await prisma.$transaction([
-    prisma.judging.findFirst({
-      where: {
-        post_id: id,
-        judge_id: user.user?.id,
-      },
-    }),
-    prisma.post.findFirst({
-      where: {
-        id: id,
-      },
-      include: {
-        user: true,
-      },
-    }),
-  ]);
+  const [judge, post] = await prisma
+    .$transaction([
+      prisma.judging.update({
+        where: {
+          post_id: id,
+          judge_id: user.user?.id,
+        },
+        data: {
+          timeout: new Date(Date.now() + 1000 * 60 * 5),
+        },
+      }),
+      prisma.post.findFirst({
+        where: {
+          id: id,
+        },
+        include: {
+          user: true,
+        },
+      }),
+    ])
+    .catch((i) => []);
 
   if (!judge || !post) notFound();
 
@@ -48,11 +53,6 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
         <Center maxWidth="600px" className="px-3 lg:px-6 pt-6 lg:pt-28">
           <h1 className="text-2xl font-semibold">{post.title}</h1>
-          <p>
-            <span className="bg-bg-main-2/10 px-2 rounded-md text-opacity-70 text-black">
-              @ {post.user.name} {post.user.lastName}
-            </span>
-          </p>
 
           <p className="text-sm">
             on{" "}

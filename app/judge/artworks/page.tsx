@@ -5,7 +5,7 @@ import Link from "next/link";
 import { notFound, redirect, RedirectType } from "next/navigation";
 
 export default async function Page() {
-  const user = await withRoleAuthProtection("judge");
+  const user = await withRoleAuthProtection(["judge"]);
   if (!user.user) return notFound();
   // check if old judged post available
   const old_opened_post = await prisma.judging.findFirst({
@@ -18,17 +18,7 @@ export default async function Page() {
   });
 
   if (old_opened_post != null) {
-    // update timeout and load
-    await prisma.judging.update({
-      where: {
-        id: old_opened_post.id,
-      },
-      data: {
-        timeout: new Date(new Date().getTime() + 1000 * 60 * 5),
-      },
-    });
-
-    redirect(
+      redirect(
       `/judge/artworks/${old_opened_post.post_id}`,
       RedirectType.replace
     );
