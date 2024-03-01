@@ -14,7 +14,7 @@ export default async function Page() {
     },
   });
 
-  const judges =
+  const judges_list =
     (user as any).role === "admin" &&
     (await prisma.user.findMany({
       where: {
@@ -32,6 +32,28 @@ export default async function Page() {
         Marks: true,
       },
     }));
+
+  const judgers_artworks =
+    (user as any).role === "judge" &&
+    (await prisma.$transaction([
+      prisma.marks.findMany({
+        where: {
+          judge_id: user.id,
+        },
+        select: {
+          id: true,
+          post: true,
+          sum: true,
+          time: true,
+        },
+        take: 5,
+      }),
+      prisma.marks.count({
+        where: {
+          judge_id: user.id,
+        },
+      }),
+    ]));
 
   return (
     <div>
@@ -57,21 +79,21 @@ export default async function Page() {
           )}
         </div>
       </div>
-      {judges ? (
+      {judges_list && (
         <div className="sm:px-5 my-10">
           <div className="px-2 sm:px-0">
             <h2 className="text-2xl font-semibold ">Judges online </h2>
             <p className="text-sm px-1">
-              {judges.filter((i) => i.Judging.length != 0).length} working of{" "}
-              {judges.length} judges.
+              {judges_list.filter((i) => i.Judging.length != 0).length} working
+              of {judges_list.length} judges.
             </p>
           </div>{" "}
           <div className="my-5">
-            {judges.map((i) => (
+            {judges_list.map((i) => (
               <Link
                 key={i.id}
                 className="flex gap-6 px-3 sm:px-4 my-1 py-1.5 hover:bg-green-50/60 outline-none focus:bg-green-50 focus:ring-1 ring-[#e6f1eafc] transition-colors rounded"
-                href={`/judge/judge/${i.id}`}
+                href={`/judges/${i.id}`}
               >
                 <div className="bg-green-100 p-3 rounded-lg text-green-800 ">
                   <svg width="1.7em" height="1.7em" viewBox="0 0 24 24">
@@ -104,10 +126,65 @@ export default async function Page() {
             ))}
           </div>
         </div>
-      ) : (
-        <></>
       )}
-      {/* {JSON.stringify(judges)} */}
+      {judgers_artworks && (
+        <div className="sm:px-5 my-10">
+          <div className="px-2 sm:px-0">
+            <h2 className="text-2xl font-semibold ">Judged By {user.name}</h2>
+            <p className="text-sm">{judgers_artworks[1]} artworks </p>
+          </div>
+          <div className="my-5">
+            {judgers_artworks[0].map((i) => (
+              <Link
+                key={i.id}
+                className="flex gap-6 px-3 sm:px-4 my-1 py-1.5 hover:bg-green-50/60 outline-none focus:bg-green-50 focus:ring-1 ring-[#e6f1eafc] transition-colors rounded"
+                href={`/judges/${user.id}/${i.id}`}
+              >
+                <div className="bg-green-100 p-3 rounded-lg text-green-800 ">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.6em"
+                    height="1.6em"
+                    viewBox="0 0 24 24"
+                  >
+                    <g
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                    >
+                      <rect
+                        width="18"
+                        height="18"
+                        x="3"
+                        y="3"
+                        rx="2"
+                        ry="2"
+                      ></rect>
+                      <circle cx="9" cy="9" r="2"></circle>
+                      <path d="m21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+                    </g>
+                  </svg>
+                </div>
+                <div>
+                  <div className="font-semibold line-clamp-1">
+                    {i.post.title}
+                  </div>
+                  <div className="flex gap-4 items-center text-xs px-2">
+                    <div className="  text-green-900/90 rounded-full  py-0.5">
+                      {i.sum}%
+                    </div>
+                    <div className="bg-green-100/40 text-green-900/90 rounded-full px-3 py-0.5 border border-[#5e92731b]">
+                      {timeSince(i.time)} ago
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

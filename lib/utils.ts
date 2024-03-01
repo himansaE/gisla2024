@@ -9,6 +9,18 @@ export function timeSince(ms: Date, margin = 0): string {
 
   const sec = Math.floor(diff / 1000);
 
+  const years = Math.floor(sec / 31536000);
+
+  if (years > 0) {
+    return `${years} year${years > 1 ? "s" : ""}`;
+  }
+
+  const months = Math.floor((sec % 31536000) / 2629800);
+
+  if (months > 0) {
+    return `${months} month${months > 1 ? "s" : ""}`;
+  }
+
   if (sec >= 3600 * 24) {
     const days = Math.floor(sec / (3600 * 24));
     return `${days} day${days > 1 ? "s" : ""}`;

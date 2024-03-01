@@ -74,6 +74,7 @@ export async function POST(req: Request) {
         diversity: data.vote.diversity,
         content: data.vote.content,
         completeness: data.vote.completeness,
+        sum: data.sum,
       },
     }),
     prisma.judging.delete({
@@ -86,7 +87,9 @@ export async function POST(req: Request) {
   return NewResponse(ResponseDone());
 }
 
-const validate = (data: ReqBody): [true, ResponseError] | [false, ReqBody] => {
+const validate = (
+  data: ReqBody
+): [true, ResponseError] | [false, ReqBody & { sum: number }] => {
   if (!(typeof data.post === "string" && /^[0-9a-f]{24}$/i.test(data.post)))
     return [true, ResponseError("Invalid post id.", "all")];
   if (typeof data.token != "string")
@@ -95,6 +98,7 @@ const validate = (data: ReqBody): [true, ResponseError] | [false, ReqBody] => {
   if (typeof data.vote != "object")
     return [true, ResponseError("Something went wrong.", "all")];
 
+  let sum = 0;
   for (const i of inputs) {
     if (
       !(
@@ -102,9 +106,9 @@ const validate = (data: ReqBody): [true, ResponseError] | [false, ReqBody] => {
         data.vote[i] >= 0 &&
         data.vote[i] <= 10
       )
-    ) {
+    )
       return [true, ResponseError("vote should be between 0-10.", i)];
-    }
+    sum += data.vote[i];
   }
-  return [false, data];
+  return [false, { ...data, sum }];
 };

@@ -111,10 +111,10 @@ model Draft {
 }
 
 model Marks {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  judge_id String @db.ObjectId
-  post_id  String @unique @db.ObjectId
-
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  judge_id      String   @db.ObjectId
+  post_id       String   @unique @db.ObjectId
+  time          DateTime @default(now())
   relevance     Int
   creativity    Int
   artistic      Int
@@ -125,6 +125,8 @@ model Marks {
   accessibility Int
   content       Int
   completeness  Int
+
+  sum Int
 
   user User @relation(references: [id], fields: [judge_id])
   post Post @relation(references: [id], fields: [post_id])
