@@ -13,7 +13,10 @@ export default async function Page({ params }: { params: { id: string } }) {
   if ((user.user as any)?.role === "judge" && params.id !== user.user?.id)
     return notFound();
 
-  const [posts, judge] = await prisma.$transaction([
+  const [judge, posts, judgement] = await prisma.$transaction([
+    prisma.user.findFirst({
+      where: { id: params.id },
+    }),
     prisma.marks.findMany({
       where: { judge_id: params.id },
 
@@ -31,16 +34,16 @@ export default async function Page({ params }: { params: { id: string } }) {
     }),
     prisma.judging.findFirst({ where: { judge_id: params.id } }),
   ]);
-
+  if (judge?.role != "judge") return notFound();
   return (
     <main className="py-5 ">
       <header className="px-5">
         <h1 className="text-2xl sm:text-4xl font-semibold">
           Judged by {user.user?.name}
         </h1>
-        {judge && (
+        {judgement && (
           <p className="text-xs sm:text-sm mt-1">
-            Last seen {timeSince(judge.timeout, 1000 * 60 * 5)} ago
+            Last seen {timeSince(judgement.timeout, 1000 * 60 * 5)} ago
           </p>
         )}
       </header>
@@ -50,6 +53,14 @@ export default async function Page({ params }: { params: { id: string } }) {
             {String(posts.length).padStart(2, "0")}
           </div>
           <div className="text-center">Artworks Judged</div>
+          {(user.user as any).role === "judge" && (
+            <Link
+              href="/judge/artworks"
+              className="bg-[#2a726f] hover:bg-opacity-90 transition-opacity text-white px-5 py-1.5 mt-6 mb-3 rounded-md"
+            >
+              Judge Artwork
+            </Link>
+          )}
         </div>
       </div>
       <div>
@@ -69,31 +80,6 @@ export default async function Page({ params }: { params: { id: string } }) {
                     height={50}
                     className="object-contain"
                   />
-                  {/* <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="1.6em"
-                    height="1.6em"
-                    viewBox="0 0 24 24"
-                  >
-                    <g
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                    >
-                      <rect
-                        width="18"
-                        height="18"
-                        x="3"
-                        y="3"
-                        rx="2"
-                        ry="2"
-                      ></rect>
-                      <circle cx="9" cy="9" r="2"></circle>
-                      <path d="m21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
-                    </g>
-                  </svg> */}
                 </div>
                 <div>
                   <div className="font-semibold line-clamp-1">
