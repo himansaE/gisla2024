@@ -176,7 +176,7 @@ export default async function Page() {
                       {i.sum}%
                     </div>
                     <div className="bg-green-100/40 text-green-900/90 rounded-full px-3 py-0.5 border border-[#5e92731b]">
-                      {timeSince(i.time)} ago
+                      {timeSince(i.time, 1000 * 60 * 5)} ago
                     </div>
                   </div>
                 </div>
@@ -188,3 +188,4 @@ export default async function Page() {
     </div>
   );
 }
+export const dynamic = "force-dynamic";

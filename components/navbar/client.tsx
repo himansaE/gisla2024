@@ -60,7 +60,7 @@ export const NavBarClient = (props: { user: Session | null; url: string }) => {
           ))}
         </div>
         <Link
-          className="flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2 ml-auto "
+          className="hidden md:flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2 ml-auto "
           href={
             props.user != null
               ? (props.user.user as any).role === "judge" ||
@@ -78,7 +78,7 @@ export const NavBarClient = (props: { user: Session | null; url: string }) => {
             : "View Artworks"}
         </Link>
         <button
-          className="-ml-6 cursor-pointer bg-bg-main-2/20 hover:bg-bg-main-2/30 transition-colors p-2 rounded-lg block md:hidden
+          className="ml-auto md:-ml-6 cursor-pointer bg-bg-main-2/20 hover:bg-bg-main-2/30 transition-colors p-2 rounded-lg block md:hidden
           focus:outline-bg-main-2/40
           "
           onClick={() => setSideNav((i) => !i)}
@@ -114,6 +114,17 @@ export const NavBarClient = (props: { user: Session | null; url: string }) => {
               {i[0]}
             </Link>
           ))}
+          {["admin", "judge"].includes((props.user?.user as any)?.role) && (
+            <Link
+              href="/judge"
+              className="hover:underline w-fit"
+              onClick={() => {
+                setSideNav(false);
+              }}
+            >
+              Judge Dashboard
+            </Link>
+          )}
         </div>
         <div className="mt-auto mb-2">
           {" "}
