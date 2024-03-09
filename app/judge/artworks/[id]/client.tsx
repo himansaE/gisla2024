@@ -47,7 +47,8 @@ export const JudgeForm = (props: { id: string; token: string }) => {
         setSubmitting(false);
       } else {
         setErrors(undefined);
-        router.replace("/judge/artworks");
+        if (req.data.next == null) router.replace("/judge");
+        router.replace(req.data.next);
       }
     } catch (e) {
       setErrors({

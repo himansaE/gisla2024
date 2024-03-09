@@ -6,6 +6,7 @@ import {
   ResponseError,
   getJsonBody,
 } from "@/lib/request";
+import { randomUUID } from "crypto";
 
 const inputs = [
   "relevance",
@@ -59,32 +60,67 @@ export async function POST(req: Request) {
   });
   if (marks != null) return NewResponse(ResponseError("Post already judged."));
 
-  await prisma.$transaction([
-    prisma.marks.create({
-      data: {
-        post_id: data.post,
-        judge_id: user.user?.id,
-        accessibility: data.vote.accessibility,
-        relevance: data.vote.relevance,
-        creativity: data.vote.creativity,
-        artistic: data.vote.artistic,
-        clarity: data.vote.clarity,
-        impact: data.vote.impact,
-        technical: data.vote.technical,
-        diversity: data.vote.diversity,
-        content: data.vote.content,
-        completeness: data.vote.completeness,
-        sum: data.sum,
-      },
-    }),
-    prisma.judging.delete({
+  // make the marks
+
+  await prisma.marks.create({
+    data: {
+      post_id: data.post,
+      judge_id: user.user?.id,
+      accessibility: data.vote.accessibility,
+      relevance: data.vote.relevance,
+      creativity: data.vote.creativity,
+      artistic: data.vote.artistic,
+      clarity: data.vote.clarity,
+      impact: data.vote.impact,
+      technical: data.vote.technical,
+      diversity: data.vote.diversity,
+      content: data.vote.content,
+      completeness: data.vote.completeness,
+      sum: data.sum,
+    },
+  });
+  await prisma.judging.delete({
+    where: {
+      judge_id: user.user.id,
+    },
+  });
+
+  const new_post = await prisma.post.findFirst({
+    where: {
+      title: { not: "**test**" },
+      Marks: null,
+      Judging: null,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (new_post != null) {
+    await prisma.judging.upsert({
       where: {
         judge_id: user.user.id,
       },
-    }),
-  ]);
+      update: {
+        post_id: new_post.id,
+        timeout: new Date(new Date().getTime() + 1000 * 60 * 5),
+        judge_id: user.user.id,
+      },
+      create: {
+        post_id: new_post.id,
+        timeout: new Date(new Date().getTime() + 1000 * 60 * 5),
+        judge_id: user.user.id,
+        token: btoa(randomUUID()),
+      },
+    });
 
-  return NewResponse(ResponseDone());
+    return NewResponse(
+      ResponseDone({
+        next: new_post.id,
+      })
+    );
+  }
+  return NewResponse(ResponseDone({ next: null }));
 }
 
 const validate = (

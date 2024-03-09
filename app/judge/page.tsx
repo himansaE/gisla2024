@@ -1,6 +1,7 @@
 import { withRoleAuthProtection } from "@/lib/auth/guards";
 import prisma from "@/lib/prisma";
 import { timeSince } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -140,32 +141,14 @@ export default async function Page() {
                 className="flex gap-6 px-3 sm:px-4 my-1 py-1.5 hover:bg-green-50/60 outline-none focus:bg-green-50 focus:ring-1 ring-[#e6f1eafc] transition-colors rounded"
                 href={`/judges/${user.id}/${i.id}`}
               >
-                <div className="bg-green-100 p-3 rounded-lg text-green-800 ">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="1.6em"
-                    height="1.6em"
-                    viewBox="0 0 24 24"
-                  >
-                    <g
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                    >
-                      <rect
-                        width="18"
-                        height="18"
-                        x="3"
-                        y="3"
-                        rx="2"
-                        ry="2"
-                      ></rect>
-                      <circle cx="9" cy="9" r="2"></circle>
-                      <path d="m21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
-                    </g>
-                  </svg>
+                <div className="bg-green-100 overflow-hidden rounded-lg text-green-800 ">
+                  <Image
+                    src={i.post.image_link}
+                    alt=""
+                    width={50}
+                    height={50}
+                    className="object-contain"
+                  />
                 </div>
                 <div>
                   <div className="font-semibold line-clamp-1">
