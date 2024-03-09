@@ -48,6 +48,9 @@ export default async function Page() {
           time: true,
         },
         take: 5,
+        orderBy: {
+          time: "desc",
+        },
       }),
       prisma.marks.count({
         where: {
@@ -67,7 +70,12 @@ export default async function Page() {
       <div className="flex flex-col justify-center items-center">
         <div className="bg-green-50 py-5 my-5  w-full box-border flex items-center flex-col ring-1 ring-green-100">
           <div className="text-8xl font-semibold text-[#162f2f]">
-            {left_to_judge}
+            {(user as any).role === "judge"
+              ? judgers_artworks &&
+                (159 / 3 - judgers_artworks[1] <= 0
+                  ? "0"
+                  : 159 / 3 - judgers_artworks[1])
+              : left_to_judge}
           </div>
           <div className="text-center">Artworks left to judge</div>
           {(user as any).role === "judge" && (
@@ -166,6 +174,31 @@ export default async function Page() {
               </Link>
             ))}
           </div>
+          {judgers_artworks && judgers_artworks[1] > 5 && (
+            <div className="flex justify-center sm:justify-start  items-center">
+              <Link
+                href="/judge/artworks"
+                className="text-[#2a726f] ring-1 ring-[#2a726f]/40 pr-5 pl-3 py-1.5 m-3 rounded-full hover:bg-[#2a726f]/10  transition-colors  flex items-center gap-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="m9 18l6-6l-6-6"
+                  ></path>
+                </svg>{" "}
+                View All
+              </Link>
+            </div>
+          )}
         </div>
       )}
     </div>

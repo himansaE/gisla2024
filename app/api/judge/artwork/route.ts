@@ -84,7 +84,16 @@ export async function POST(req: Request) {
       judge_id: user.user.id,
     },
   });
+  // limit judge to  posts 53
+  const judge_post_count = await prisma.marks.count({
+    where: {
+      judge_id: user.user.id,
+    },
+  });
 
+  if (judge_post_count >= 53) {
+    return NewResponse(ResponseDone({ next: null }));
+  }
   const new_post = await prisma.post.findFirst({
     where: {
       title: { not: "**test**" },

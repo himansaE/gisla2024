@@ -7,7 +7,19 @@ import { notFound, redirect, RedirectType } from "next/navigation";
 export default async function Page() {
   const user = await withRoleAuthProtection(["judge"]);
   if (!user.user) return notFound();
-  // check if old judged post available
+
+  // limit judge to  posts 53
+  const judge_post_count = await prisma.marks.count({
+    where: {
+      judge_id: user.user.id,
+    },
+  });
+
+  if (judge_post_count >= 53) {
+    return <Render />;
+  }
+
+  // check if old opened post available
   const old_opened_post = await prisma.judging.findFirst({
     where: {
       judge_id: user.user.id,
@@ -18,7 +30,7 @@ export default async function Page() {
   });
 
   if (old_opened_post != null) {
-      redirect(
+    redirect(
       `/judge/artworks/${old_opened_post.post_id}`,
       RedirectType.replace
     );
@@ -56,6 +68,9 @@ export default async function Page() {
     });
     return redirect(`/judge/artworks/${new_post.id}`, RedirectType.replace);
   }
+  return <Render />;
+}
+const Render = () => {
   return (
     <div>
       <header className="p-3 sm:p-5">
@@ -84,4 +99,4 @@ export default async function Page() {
       </div>
     </div>
   );
-}
+};
